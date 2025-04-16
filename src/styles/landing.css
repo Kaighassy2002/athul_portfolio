@@ -1,0 +1,139 @@
+.landing{
+  background-image: url('../assets//images/Landing.jpg');
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navbar-container .navbar-brand img {
+  filter: brightness(90%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-container .navbar-brand img:hover {
+  transform: scale(1.1);
+}
+
+.nav-items {
+  text-decoration: none;
+  
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  margin: 0 10px;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+  background: none;
+  border: none;
+}
+
+.nav-items:hover {
+  color: #7d9b76;
+}
+
+.nav-items::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background-color: #7d9b76;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-items:hover::after {
+  transform: scaleX(1);
+}
+
+.contact-btn {
+  background: #457d58;
+  color: #f6f6e9;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 20px;
+  border: none;
+  transition: background 0.3s ease-in-out;
+}
+
+.contact-btn:hover {
+  background-color: #7d9b76;
+  color: #093d00;
+}
+.right {
+  position: relative;
+  overflow: hidden;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Horizontally centers items */
+  justify-content: center;  /* Vertically centers items */
+  min-height: 80vh;
+  text-align: center;
+  
+  
+}
+
+
+.main-head {
+  font-size: 82px;
+  color: #272727;
+  margin-bottom: 1.5rem;
+  font-family: "Hammersmith One", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 1rem;
+  
+}
+.text-container {
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.fade-text {
+  opacity: 0;
+  transform: translateY(20px);
+ 
+  font-size: 30.9px;
+  color: #272727;
+  text-align: center;
+  
+  max-width: 700px;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  font-family: "Playfair Display";
+  font-style: italic;
+}
+
+.btn.view-more {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: #093d00;
+  color: #f6f6e9;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn.view-more:hover{
+  font-size: 22px;
+  color: #093d00;
+}
+

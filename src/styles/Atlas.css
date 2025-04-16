@@ -1,0 +1,288 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Atlas Section */
+.atlas {
+    background-image: url('../assets//images/bg1.jpg');
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Atlas Container */
+.atlas-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    height: 100vh;
+    position: relative;
+    padding: 0 5%;
+    overflow: hidden;
+}
+
+/* Left Side Content */
+.atlas-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 70%;
+    text-align: left;
+    margin-top: -5%;
+   
+}
+
+.atlas-title {
+    font-size: 84.5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: #093d00;
+    opacity: 0;
+    transform: translateY(50px);
+    font-family: "Hammersmith One";
+    font-weight: 500;
+  letter-spacing: 1rem;
+}
+
+.atlas-subtitle {
+    font-size: 18px;
+    font-family: "Playfair Display";
+    color: #272727;
+    /* margin-top: 10px; */
+    opacity: 0;
+    transform: translateY(50px);
+    font-style: italic;
+}
+.atlas-divider {
+    border: 0;
+    border-top: 5px solid #093d00;
+    margin: 2.5rem 0;
+    width: 10%;
+  }
+  
+.atlas-about{
+    font-size: 14px;
+    font-family: "Playfair Display";
+    color: #272727;
+    max-width: 75%;
+    text-align: justify;
+   
+    
+}
+
+/* Resume Button */
+ .atlas-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: 2px solid #093d00;
+    border-radius: 50px;
+    background: transparent;
+    color: #093d00;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: "Playfair Display";
+}
+
+.atlas-button:hover {
+    background: #457d58;
+    color: #272727;
+}
+
+/* Right Side Image & Animation */
+.atlas-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atlas-image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .atlas-image {
+    z-index: 2;
+    height: 100vh;
+    animation: floatUpDown 3s ease-in-out infinite;
+    position: relative;
+  }
+  
+  
+
+
+/* About & Project Sections */
+.about-container, .skills-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 5%;
+    background-attachment: fixed;
+    color: #f6f6e9;
+}
+.transparent-about{
+    padding: 5%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.about-container {
+    background-color: #457d58;
+    
+
+}
+.about{
+  max-width: 60%;
+}
+
+.about h2{
+  color: #f6f6e9;
+  font-family: "Hammersmith One";
+   font-weight: 500;
+   font-size: 40px;
+ 
+}
+.about p{
+  color: #f6f6e9;
+  font-family: "Playfair Display";
+   font-weight: 500;
+   font-size: 18px;
+   line-height: 30px;
+   margin-top: 20px;
+   text-align: justify;
+}
+.horizontal-line{
+  border-right: 2px solid;
+  height: 60%;
+  padding: 0 3rem;
+}
+.skill-icon {
+  transition: transform 0.3s ease;
+}
+.skill-icon:hover {
+  transform: scale(1.1);
+}
+
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .atlas-title {
+    font-size: 60px;
+    letter-spacing: 0.5rem;
+  }
+
+  .atlas-subtitle {
+    font-size: 16px;
+  }
+
+  .atlas-about {
+    font-size: 13px;
+    max-width: 85%;
+  }
+
+  .atlas-button {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .atlas-container {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-top: 60px;
+  }
+
+  .atlas-left {
+    align-items: center;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .atlas-right {
+    margin-top: 30px;
+  }
+
+  .atlas-image {
+    height: 60vh;
+  }
+
+  .about {
+    max-width: 90%;
+  }
+
+  .horizontal-line {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .atlas-title {
+    font-size: 45px;
+  }
+
+  .atlas-subtitle {
+    font-size: 14px;
+  }
+
+  .atlas-about {
+    font-size: 12px;
+  }
+
+  .atlas-button {
+    font-size: 14px;
+    padding: 6px 14px;
+  }
+
+  .about h2 {
+    font-size: 30px;
+  }
+
+  .about p {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}
+
+@media (max-width: 576px) {
+  .atlas-title {
+    font-size: 36px;
+    letter-spacing: 0.3rem;
+  }
+
+  .atlas-subtitle {
+    font-size: 13px;
+  }
+
+  .atlas-image {
+    height: 50vh;
+  }
+
+  .about-container,
+  .skills-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 8% 5%;
+  }
+
+  .about p {
+    font-size: 15px;
+  }
+
+  .atlas-button {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
+
+
