@@ -285,58 +285,63 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
   ) : (filteredCertificates.length === 0 ? (
     <p className="no-items">No certificates found for selected filters.</p>
   ) : (
-    <Swiper
-      modules={[Autoplay, Pagination]}
-      spaceBetween={20}
-      slidesPerView={1}
-      pagination={{
-        el: '.swiper-pagination',
-        clickable: true,
-        dynamicBullets: true, 
-      }}
-      autoplay={{ delay: 2500, disableOnInteraction: false }}
-      breakpoints={{
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-      }}
-      onSlideChange={(swiper) => {
-        // Reset all bullets to hidden
-        const bullets = document.querySelectorAll('.swiper-pagination-bullet');
-        bullets.forEach((b) => {
-          b.style.display = 'none'; // Hide all bullets by default
-        });
+<Swiper
+  modules={[Autoplay, Pagination]}
+  spaceBetween={20}
+  slidesPerView={1}
+  pagination={{
+    el: '.swiper-pagination',
+    clickable: true,
+    dynamicBullets: false, // we’re handling custom bullet visibility
+  }}
+  autoplay={{ delay: 2500, disableOnInteraction: false }}
+  breakpoints={{
+    0: { slidesPerView: 1, spaceBetween: 10 },
+    640: { slidesPerView: 1 },
+    768: { slidesPerView: 2 },
+    1024: { slidesPerView: 4 },
+  }}
+  onPaginationUpdate={(swiper, paginationEl) => {
+    const bullets = paginationEl.querySelectorAll('.swiper-pagination-bullet');
+    bullets.forEach((b, i) => {
+      b.style.display = 'none'; // hide all bullets
 
-        // Always show the active, previous, and next bullets
-        bullets.forEach((b, i) => {
-          if (
-            i === swiper.activeIndex ||             // Active bullet
-            i === swiper.activeIndex - 1 ||         // Previous bullet
-            i === swiper.activeIndex + 1            // Next bullet
-          ) {
-            b.style.display = 'block'; // Show the active, previous, and next bullets
-          }
-        });
-      }}
-    >
-      {(filteredCertificates.length ? filteredCertificates : certificate).map((cert, index) => (
-        <SwiperSlide key={index}>
-          <div className="card">
-            <img className="card__background" src={cert.image} alt={cert.category} />
-            <div className="card__content | flow">
-              <div className="card__content--container | flow">
-                <h2 className="card__title">{cert.category}</h2>
-                <p className="card__description">{cert.organization} | {cert.startDate}</p>
-              </div>
-              <a href={cert.links} className="card__button" target="_blank" rel="noopener noreferrer">
-                View Certificate
-              </a>
-            </div>
+      if (
+        i === swiper.activeIndex ||
+        i === swiper.activeIndex - 1 ||
+        i === swiper.activeIndex + 1
+      ) {
+        b.style.display = 'block'; // show active, prev, next
+      }
+    });
+  }}
+>
+  {(filteredCertificates.length ? filteredCertificates : certificate).map((cert, index) => (
+    <SwiperSlide key={index}>
+      <div className="card">
+        <img className="card__background" src={cert.image} alt={cert.category} />
+        <div className="card__content | flow">
+          <div className="card__content--container | flow">
+            <h2 className="card__title">{cert.category}</h2>
+            <p className="card__description">
+              {cert.organization} | {cert.startDate}
+            </p>
           </div>
-        </SwiperSlide>
-      ))}
-      <div className="swiper-pagination"></div> {/* Pagination bullets */}
-    </Swiper>
+          <a
+            href={cert.links}
+            className="card__button"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Certificate
+          </a>
+        </div>
+      </div>
+    </SwiperSlide>
+  ))}
+  <div className="swiper-pagination"></div>
+</Swiper>
+
   ))}
 </div>
 

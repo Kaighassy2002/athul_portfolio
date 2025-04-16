@@ -8,9 +8,9 @@
 .ribbon {
     position: fixed;
     top: 25%;
-    left: -2%;
-    width: 290px;
-    background-color: rgba(60, 110, 113, 0.8); /* transparent green */
+    left: 0%;
+    width: 310px;
+    background-color: rgba(60, 110, 113, 0.8); 
     color: white;
     text-align: center;
     line-height: 2rem;

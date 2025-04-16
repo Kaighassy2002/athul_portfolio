@@ -55,7 +55,7 @@ function Landing() {
   }, [step]);
 
   return (
-    <div className='landing'>
+    <div className='landing-container'>
       <Header />
       <div className="main-container">
         <h1 className='main-head'>Hello I'm Athul</h1>

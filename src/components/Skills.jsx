@@ -35,9 +35,12 @@ const Skills = () => {
     { name: "Natural Language Processing", percent: 70 },
     { name: "Modelling", percent: 92 },
     { name: "Computer Vision", percent: 78 },
-    { name: "Graph Database", percent: 90 },
+    { name: "Prompt Engineering", percent: 90 },
     { name: "Data Visualization", percent: 72 },
-    { name: "Kubernetes", percent: 92 },
+    { name: "Developer", percent: 92 },
+    { name: "AI agent", percent: 70 },
+    { name: "Debuging", percent: 80 },
+    { name: "Data Structures and Algorithms", percent: 87 },
   ];
 
   const barRefs = useRef([]);
@@ -100,12 +103,12 @@ const Skills = () => {
             
              <div className='skill-icon'>
                 <img src={aws} alt="Amazon sagemaker" />
-                <span className="tool-name">Amazon sagemaker</span>
+                <span className="tool-name">Amazon Sagemaker</span>
                 
              </div>
              <div className='skill-icon'>
                 <img src={mysql} alt="mysql" />
-                <span className="tool-name">My sql</span>
+                <span className="tool-name">MYSQL</span>
                 
              </div>
              <div className='skill-icon'>
@@ -131,19 +134,19 @@ const Skills = () => {
              </div>
              <div className='skill-icon'>
                 <img src={mongodb} alt="mongodb" />
-                <span className="tool-name">Mongodb</span>
+                <span className="tool-name">MongoDB</span>
                 
              </div>
             
              
              <div className='skill-icon'>
                 <img src={micro} alt="micro" />
-                <span className="tool-name">Micro</span>
+                <span className="tool-name">Microk8s</span>
                 
              </div>
              <div className='skill-icon'>
                 <img src={nltk} alt="nltk" />
-                <span className="tool-name">Nltk</span>
+                <span className="tool-name">NLTK</span>
                 
              </div>
              <div className='skill-icon'>
@@ -153,7 +156,7 @@ const Skills = () => {
              </div>
              <div className='skill-icon'>
                 <img src={tensor} alt="tensor" />
-                <span className="tool-name">Tensor</span>
+                <span className="tool-name">Tensorflow</span>
                 
              </div>
              <div className='skill-icon'>

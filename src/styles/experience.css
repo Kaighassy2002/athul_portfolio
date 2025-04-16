@@ -305,13 +305,15 @@
   position: relative;
   display: grid;
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   height: 320px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   transition: transform 0.4s ease;
   cursor: pointer;
+  
+  margin: 0 auto; /* Center the card within the slide */
 }
 
 .card__background {
@@ -391,9 +393,20 @@
 
 /* swiper */
 
-.swiper-slide {
-  padding-bottom: 40px; 
+.swiper {
+  width: 100%;
+  padding: 10px 0;
+  box-sizing: border-box;
 }
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 40px;
+  box-sizing: border-box;
+}
+
 
 
 
