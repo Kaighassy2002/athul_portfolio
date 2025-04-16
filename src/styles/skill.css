@@ -167,7 +167,12 @@
   
     .skill-icon img {
       height: 40px;
+      padding: 2px 8px;
+  transition: transform 0.3s ease;
     }
+  }
+  .skill-icon img:hover {
+    transform: scale(1.2); /* Grows 20% */
   }
   
   @media (max-width: 576px) {

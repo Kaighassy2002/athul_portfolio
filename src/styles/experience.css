@@ -113,7 +113,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
   
-  .timeline-role {
+  .timeline-role,.extra-experience-info h5 {
     margin: 0 0 10px;
     font-size: 15px;
     color: #f6f6e9;
@@ -124,7 +124,7 @@
     margin: 0;
   }
   
-  .timeline-right li {
+  .timeline-right li ,.extra-experience-info p {
     margin-bottom: 6px;
     font-size: 14px;
   }
@@ -139,6 +139,7 @@
     border-radius: 10px;
     
   }
+ 
 
 /* filter */
 
@@ -394,20 +395,7 @@
   padding-bottom: 40px; 
 }
 
-/* .swiper-pagination {
-  text-align: center;
-  margin-top: 20px;
-  position: static; 
-}
 
-.swiper-pagination-bullet {
-  background-color: #ccc;       
-  width: 12px;
-  height: 12px;
-  opacity: 1;                   
-  border-radius: 50%;          
-  margin: 0 6px;
-} */
 
 
 .swiper-pagination {
