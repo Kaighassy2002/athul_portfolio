@@ -106,31 +106,9 @@ function Atlas() {
           </p>
           <button className="btn">View Resume</button>
         </div>
-        <div className="horizontal-line"></div>
+        {/* <div className="horizontal-line"></div> */}
 
-        <div className="achivement-container p-5">
-          <div>
-            <i class="fa-solid fa-briefcase"></i>
-            <h6>123</h6>
-            <p>
-              Scucessful <br /> Projects
-            </p>
-          </div>
-          <div>
-            <i class="fa-solid fa-face-smile"></i>
-            <h6>65</h6>
-            <p>
-              Happy <br /> Clients
-            </p>
-          </div>
-          <div>
-            <i class="fa-solid fa-trophy"></i>
-            <h6>18</h6>
-            <p>
-              Award <br /> Won
-            </p>
-          </div>
-        </div>
+        
       </div>
 
       {/* Skill */}
