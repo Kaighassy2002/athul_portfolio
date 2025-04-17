@@ -28,9 +28,11 @@ function Header() {
             Scribble
           </Nav.Link>
         </Nav>
-        <div className="ms-auto d-flex justify-content-center pe-5">
-          <button className="contact-btn">Contact</button>
-        </div>
+       <Link to={"/contact"} style={{textDecoration:'none'}}>
+          <div className="ms-auto d-flex justify-content-center pe-5">
+            <button className="contact-btn">Contact</button>
+          </div>
+       </Link>
       </Navbar.Collapse>
     </Container>
   </Navbar>

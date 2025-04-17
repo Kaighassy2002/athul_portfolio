@@ -1,12 +1,14 @@
 import React from 'react'
+import "../styles/contact.css"
 import Header from '../components/Header'
 
-function Blog() {
+
+function Contact() {
   return (
     <div>
-      <Header/>
+     <Header/>
     </div>
   )
 }
 
-export default Blog
+export default Contact

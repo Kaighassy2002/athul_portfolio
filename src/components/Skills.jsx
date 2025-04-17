@@ -13,7 +13,7 @@ import pandas from "../assets/images/pandas.png";
 import pytorch from "../assets/images/pytorch.png";
 import python from "../assets/images/python.png";
 import tensor from "../assets/images/tensor-flow.png";
-import spacy from "../assets/images/spacy.webp";
+import spacy from "../assets/images/spacy.png";
 import types from "../assets/images/type.png";
 import rasa from "../assets/images/rasa.png";
 import sklearn from "../assets/images/sklearn.png";
@@ -25,6 +25,14 @@ import git from "../assets/images/git.png";
 import docker from "../assets/images/docker.png";
 import kubernets from "../assets/images/kubernets.png";
 import dj from "../assets/images/django.png";
+import deepstream from "../assets/images/deepstream.png";
+import lang from "../assets/images/lang chain.png";
+import matplotlib from "../assets/images/matplotlib.png";
+import milvus from "../assets/images/milvus.png";
+import plotly from "../assets/images/plotly.png";
+import seaborn from "../assets/images/seaborn.png";
+import ultralytics from "../assets/images/ultralytics.png";
+import rasbery from "../assets/images/raspberry.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -207,6 +215,46 @@ const Skills = () => {
              <div className='skill-icon'>
                 <img src={kafka} alt="kafka" />
                 <span className="tool-name">Kafka</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={deepstream} alt="Deepstream" />
+                <span className="tool-name">Deepstream</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={lang} alt="Lang chain" />
+                <span className="tool-name">Lang chain</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={matplotlib} alt="Matplotlib" />
+                <span className="tool-name">Matplotlib</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={milvus} alt="Milvus" />
+                <span className="tool-name">Milvus</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={seaborn} alt="Seaborn" />
+                <span className="tool-name">Seaborn</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={ultralytics} alt="Ultralytics" />
+                <span className="tool-name">Ultralytics</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={plotly} alt="plotly" />
+                <span className="tool-name">Plotly</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={rasbery} alt="raspberry" />
+                <span className="tool-name">Raspberry pie</span>
                 
              </div>
           </div>

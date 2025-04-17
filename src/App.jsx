@@ -6,6 +6,7 @@ import Atlas from './pages/Atlas'
 import Scribble from './pages/Scribble'
 import Blog from './pages/Blog'
 import MaintenanceOverlay from './components/MaintenceOverlay'
+import Contact from './pages/Contact'
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
         <Route path='/atlas' element={<Atlas/>}/>
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/scribble' element={<Scribble/>}/>
-        
+        <Route path='/contact' element={<Contact/>}/>
       </Routes>
     </>
   )

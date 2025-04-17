@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import me from "../assets/images/Me.png";
-import photo from "../assets/images/animea.png";
+
 import "../styles/landing.css";
 import gsap from 'gsap';
 import Header from "../components/Header";

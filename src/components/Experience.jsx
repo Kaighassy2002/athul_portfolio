@@ -247,24 +247,34 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
       
     </div>
 
-   <div className="filter-input-container">
-      <input
-        type="text"
-        placeholder="Category"
-        className="filter-input"
-        name="category"
-        value={filters.category}
-        onChange={handleFilterChange}
-      />
-      <input
-        type="text"
-        placeholder="Organization"
-         className="filter-input"
-        name="organization"
-        value={filters.organization}
-        onChange={handleFilterChange}
-      />
-   </div>
+    <div className="filter-input-container">
+  <select
+    className="filter-input"
+    name="category"
+    value={filters.category}
+    onChange={handleFilterChange}
+  >
+    <option value="" disabled>Select Category</option>
+    <option value="Data Science">Data Science</option>
+    <option value="Mechine Learning">Mechine Learning</option>
+    <option value="System Design">System Design</option>
+    
+  </select>
+
+  <select
+    className="filter-input "
+    name="organization"
+    value={filters.organization}
+    onChange={handleFilterChange}
+  >
+    <option value="" disabled>Select Organization</option>
+    <option value="Udemy">Udemy</option>
+    <option value="Coursera">Coursera</option>
+    
+    
+  </select>
+</div>
+
     
 
     {/* Clear Button */}

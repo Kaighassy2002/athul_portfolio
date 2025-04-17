@@ -1,9 +1,10 @@
 import React from 'react'
+import Header from '../components/Header'
 
 function Scribble() {
   return (
     <div>
-      hello
+      <Header/>
     </div>
   )
 }

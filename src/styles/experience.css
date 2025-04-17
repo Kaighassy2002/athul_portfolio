@@ -254,8 +254,10 @@
   background-color: transparent;
   border: 2px solid #3C6E71; /* nice contrasting border */
   border-radius: 10px;
+  font-style: italic;
   padding: 10px 15px;
-  color: #ffffff; /* text color */
+  margin: .5rem 0;
+  color: #272727; /* text color */
   font-size: 16px;
   outline: none;
   width: 100%;
@@ -268,11 +270,7 @@
   box-shadow: 0 0 10px rgba(60, 110, 113, 0.6);
 }
 
-.filter-input::placeholder {
-  color: #272727;
-  opacity: 1;
-  font-style: italic;
-}
+
 
 
 

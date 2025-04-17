@@ -31,7 +31,7 @@ function Project() {
 
   return (
     <div className="project-container">
-      <h3>Recent Works</h3>
+      <h3>Recent Works <i className="fa-solid fa-briefcase"></i></h3>
       <div className="project-cards-container">
         {projects.map((project, index) => (
           <div className="card" key={index}>

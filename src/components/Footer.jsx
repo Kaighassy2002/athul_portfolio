@@ -5,7 +5,8 @@ import me from "../assets/images/Me.png";
 function Footer() {
   return (
     <>
-     <div className='footer'>
+     <div className='footer-section'>
+        <div className="footer">
           <div className="footer-social mb-4">
             <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-github"></i>
@@ -17,15 +18,19 @@ function Footer() {
               <i className="fa-brands fa-instagram"></i>
             </a>
           </div>
-    
+  
           <hr className="footer-divider" />
-    
-          <footer className="footer">
+  
+          <footer className="footer-content">
             <img src={me} alt="logo" className="footer-logo" />
             <p className="footer-copy">
               © {new Date().getFullYear()} Athul. All rights reserved.
             </p>
+            <p className="footer-love">
+              Made with <span>❤️</span> by Athul
+            </p>
           </footer>
+        </div>
      </div>
     </>
   );

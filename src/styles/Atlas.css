@@ -1,13 +1,7 @@
-/* General Styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
 
 /* Atlas Section */
 .atlas {
-    background-image: url('../assets//images/bg1.jpg');
+    background-image: url('../assets//images/skill.jpg');
     height: 100vh;
     background-position: center;
     background-size: cover;
