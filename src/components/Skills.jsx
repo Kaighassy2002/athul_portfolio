@@ -33,22 +33,25 @@ import plotly from "../assets/images/plotly.png";
 import seaborn from "../assets/images/seaborn.png";
 import ultralytics from "../assets/images/ultralytics.png";
 import rasbery from "../assets/images/raspberry.png";
+import flask from "../assets/images/flask.png";
+import chroma from "../assets/images/Chroma.png";
+import ubuntu from "../assets/images/ubuntu.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Skills = () => {
   const skills = [
-    { name: "Data Science", percent: 88 },
+    { name: "Data Science", percent: 95 },
     { name: "Machine Learning", percent: 95 },
-    { name: "Natural Language Processing", percent: 70 },
+    { name: "Natural Language Processing", percent: 90 },
     { name: "Modelling", percent: 92 },
-    { name: "Computer Vision", percent: 78 },
-    { name: "Prompt Engineering", percent: 90 },
-    { name: "Data Visualization", percent: 72 },
-    { name: "Developer", percent: 92 },
+    { name: "Computer Vision", percent: 95 },
+    { name: "Prompt Engineering", percent: 80 },
+    { name: "Data Visualization", percent: 90 },
+    { name: "Developer", percent: 90 },
     { name: "AI agent", percent: 70 },
-    { name: "Debuging", percent: 80 },
-    { name: "Data Structures and Algorithms", percent: 87 },
+    { name: "Debuging", percent: 96 },
+    { name: "Data Structures and Algorithms", percent: 80 },
   ];
 
   const barRefs = useRef([]);
@@ -108,36 +111,131 @@ const Skills = () => {
                 <span className="tool-name">Python</span>
                 
              </div>
-            
              <div className='skill-icon'>
-                <img src={aws} alt="Amazon sagemaker" />
-                <span className="tool-name">Amazon Sagemaker</span>
+                <img src={tensor} alt="tensor" />
+                <span className="tool-name">Tensorflow</span>
                 
              </div>
+
              <div className='skill-icon'>
-                <img src={mysql} alt="mysql" />
-                <span className="tool-name">MYSQL</span>
+                <img src={pytorch} alt="pytorch" />
+                <span className="tool-name">Pytorch</span>
                 
              </div>
-             <div className='skill-icon'>
-                <img src={git} alt="git" />
-                <span className="tool-name">Git</span>
-                
-             </div>
-             
              <div className='skill-icon'>
                 <img src={pandas} alt="pandas" />
                 <span className="tool-name">Pandas</span>
                 
              </div>
              <div className='skill-icon'>
-                <img src={docker} alt="docker" />
-                <span className="tool-name">Docker</span>
+                <img src={numpy} alt="numpy" />
+                <span className="tool-name">Numpy</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={sklearn} alt="sklearn" />
+                <span className="tool-name">sklearn</span>
                 
              </div>
              <div className='skill-icon'>
                 <img src={opencv} alt="opencv" />
                 <span className="tool-name">Opencv</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={yolo} alt="yolo" />
+                <span className="tool-name">Yolo</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={ultralytics} alt="Ultralytics" />
+                <span className="tool-name">Ultralytics</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={deepstream} alt="Deepstream" />
+                <span className="tool-name">Deepstream</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={matplotlib} alt="Matplotlib" />
+                <span className="tool-name">Matplotlib</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={seaborn} alt="Seaborn" />
+                <span className="tool-name">Seaborn</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={plotly} alt="plotly" />
+                <span className="tool-name">Plotly</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={nltk} alt="nltk" />
+                <span className="tool-name">NLTK</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={spacy} alt="spacy" />
+                <span className="tool-name">Spacy</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={flask} alt="flask" />
+                <span className="tool-name">Flask</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={dj} alt="DJANGO" />
+                <span className="tool-name">Django</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={rasa} alt="rasa" />
+                <span className="tool-name">Rasa</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={lang} alt="Lang chain" />
+                <span className="tool-name">Lang chain</span>
+                
+             </div>
+            
+            
+             
+             <div className='skill-icon'>
+                <img src={git} alt="git" />
+                <span className="tool-name">Git</span>
+                
+             </div>
+             
+            
+             <div className='skill-icon'>
+                <img src={docker} alt="docker" />
+                <span className="tool-name">Docker</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={kubernets} alt="kubernets" />
+                <span className="tool-name">Kubernets</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={micro} alt="micro" />
+                <span className="tool-name">Microk8s</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={kafka} alt="kafka" />
+                <span className="tool-name">Kafka</span>
+                
+             </div>
+             
+             <div className='skill-icon'>
+                <img src={mysql} alt="mysql" />
+                <span className="tool-name">MYSQL</span>
                 
              </div>
              <div className='skill-icon'>
@@ -148,88 +246,8 @@ const Skills = () => {
             
              
              <div className='skill-icon'>
-                <img src={micro} alt="micro" />
-                <span className="tool-name">Microk8s</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={nltk} alt="nltk" />
-                <span className="tool-name">NLTK</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={dj} alt="DJANGO" />
-                <span className="tool-name">Django</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={tensor} alt="tensor" />
-                <span className="tool-name">Tensorflow</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={spacy} alt="spacy" />
-                <span className="tool-name">Spacy</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={pytorch} alt="pytorch" />
-                <span className="tool-name">Pytorch</span>
-                
-             </div>
-             <div className='skill-icon'>
                 <img src={types} alt="Type DB" />
                 <span className="tool-name">Type DB</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={kubernets} alt="kubernets" />
-                <span className="tool-name">Kubernets</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={sklearn} alt="sklearn" />
-                <span className="tool-name">sklearn</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={yolo} alt="yolo" />
-                <span className="tool-name">Yolo</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={rasa} alt="rasa" />
-                <span className="tool-name">Rasa</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={numpy} alt="numpy" />
-                <span className="tool-name">Numpy</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={linux} alt="linux" />
-                <span className="tool-name">Linux</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={kafka} alt="kafka" />
-                <span className="tool-name">Kafka</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={deepstream} alt="Deepstream" />
-                <span className="tool-name">Deepstream</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={lang} alt="Lang chain" />
-                <span className="tool-name">Lang chain</span>
-                
-             </div>
-             <div className='skill-icon'>
-                <img src={matplotlib} alt="Matplotlib" />
-                <span className="tool-name">Matplotlib</span>
                 
              </div>
              <div className='skill-icon'>
@@ -237,24 +255,42 @@ const Skills = () => {
                 <span className="tool-name">Milvus</span>
                 
              </div>
+             
+             
+            
+             
              <div className='skill-icon'>
-                <img src={seaborn} alt="Seaborn" />
-                <span className="tool-name">Seaborn</span>
+                <img src={chroma} alt="chroma" />
+                <span className="tool-name">Chroma</span>
                 
              </div>
+             
+            
              <div className='skill-icon'>
-                <img src={ultralytics} alt="Ultralytics" />
-                <span className="tool-name">Ultralytics</span>
+                <img src={linux} alt="linux" />
+                <span className="tool-name">Linux</span>
                 
              </div>
+            
+             
              <div className='skill-icon'>
-                <img src={plotly} alt="plotly" />
-                <span className="tool-name">Plotly</span>
+                <img src={ubuntu} alt="ubantu" />
+                <span className="tool-name">Ubuntu</span>
                 
              </div>
+             
+             
+            
+            
+            
              <div className='skill-icon'>
                 <img src={rasbery} alt="raspberry" />
                 <span className="tool-name">Raspberry pie</span>
+                
+             </div>
+             <div className='skill-icon'>
+                <img src={aws} alt="Amazon sagemaker" />
+                <span className="tool-name">Amazon Sagemaker</span>
                 
              </div>
           </div>

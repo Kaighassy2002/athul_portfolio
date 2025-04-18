@@ -74,7 +74,7 @@ function Atlas() {
         <div className="atlas-container">
           <div className="atlas-left">
             <h1 className="atlas-title" ref={titleRef}>
-              ATHUL <span style={{ color: "#457d58" }}>SURESH</span>
+              ATHUL <span style={{ color: "#457d58", fontFamily:"Hammersmith One"}}>SURESH</span>
             </h1>
             <p className="atlas-subtitle" ref={subtitleRef}>
               AI/ML Engineer | Python Enthusiast | Building Intelligent Systems

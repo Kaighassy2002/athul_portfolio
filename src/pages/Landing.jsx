@@ -22,19 +22,25 @@ function Landing() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setStep(prev => {
-        if (prev < texts.length + 1) {
-          return prev + 1;
-        } else {
-          clearInterval(interval);
-          return prev;
-        }
-      });
-    }, 2500);
-    return () => clearInterval(interval);
+    let currentStep = 0;
+    let delay = 800; 
+    const showNext = () => {
+      setStep(currentStep + 1);
+      currentStep++;
+  
+      
+      delay += 1300;
+  
+      if (currentStep < texts.length + 1) {
+        setTimeout(showNext, delay);
+      }
+    };
+  
+    setTimeout(showNext, delay);
+  
+    return () => clearTimeout();
   }, []);
-
+  
   useEffect(() => {
     if (textRef.current) {
       gsap.fromTo(

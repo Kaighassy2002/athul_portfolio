@@ -256,7 +256,7 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
   >
     <option value="" disabled>Select Category</option>
     <option value="Data Science">Data Science</option>
-    <option value="Mechine Learning">Mechine Learning</option>
+    <option value="Machine Learning">Machine Learning</option>
     <option value="System Design">System Design</option>
     
   </select>
