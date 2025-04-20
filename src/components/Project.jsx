@@ -4,28 +4,28 @@ import "../styles/project.css";
 function Project() {
   const projects = [
     {
-      title: "Portfolio Website",
-      description: "A personal portfolio website showcasing skills and projects.",
+      title: "Project 1",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit..",
       image: "https://via.placeholder.com/300x200",
-      link: "https://your-portfolio-link.com"
+      link: "https://your-project-demo.com"
     },
     {
-      title: "E-Commerce App",
-      description: "An e-commerce platform with shopping cart and user login.",
+      title: "Project 2",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       image: "https://via.placeholder.com/300x200",
-      link: "https://ecommerce-app-demo.com"
+      link: "https://project2-demo.com"
     },
     {
-      title: "Blog Platform",
-      description: "A full-featured blog platform with user authentication.",
+      title: "Project 3",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       image: "https://via.placeholder.com/300x200",
-      link: "https://blog-platform-demo.com"
+      link: "https://project3-demo.com"
     },
     {
-      title: "Doctor Finder",
-      description: "Location-based web app to find doctors nearby.",
+      title: "Project 4",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       image: "https://via.placeholder.com/300x200",
-      link: "https://doctor-finder-demo.com"
+      link: "https://project4-demo.com"
     },
   ];
 
@@ -40,7 +40,7 @@ function Project() {
               <h4>{project.title}</h4>
               <p>{project.description}</p>
               <a href={project.link} target="_blank" rel="noopener noreferrer" className="project-link">
-                View Project
+                View Project  
               </a>
             </div>
           </div>

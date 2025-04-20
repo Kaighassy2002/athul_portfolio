@@ -48,7 +48,7 @@ const Skills = () => {
     { name: "Computer Vision", percent: 95 },
     { name: "Prompt Engineering", percent: 80 },
     { name: "Data Visualization", percent: 90 },
-    { name: "Developer", percent: 90 },
+    { name: "DevOps", percent: 90 },
     { name: "AI agent", percent: 70 },
     { name: "Debuging", percent: 96 },
     { name: "Data Structures and Algorithms", percent: 80 },

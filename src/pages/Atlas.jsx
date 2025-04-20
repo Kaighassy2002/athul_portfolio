@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/Atlas.css";
 import Header from "../components/Header";
-
+import resume from "../assets/images/ATHUL SURESH resume-2025.pdf"
 import Skills from "../components/Skills";
 import Experience from "../components/Experience";
 import Project from "../components/Project";
@@ -95,18 +95,14 @@ function Atlas() {
         <div className="about">
           <h2>Behind the Algorithms</h2>
           <p>
-            Hey, I'm Athul Suresh <br />— a Machine Learning Engineer who loves
-            building smarter, real-world AI systems. With 5+ years in video
-            analytics, NLP, and sensor data, I focus on turning ideas into
-            useful, human-centered solutions. I'm all about making AI simpler,
-            scalable, and meaningful — not just models, but systems that matter.
-            I enjoy solving tough problems and finding patterns in messy data.
-            This portfolio is a glimpse into that journey — fueled by curiosity
-            and a love for learning.
+             I'm a Machine Learning Engineer shaping intelligent systems that connect data to decisions. With 5+ years across video analytics, NLP, and large-scale, high-fidelity sensor data, I build AI pipelines that are scalable, interpretable, and built for the real world. From face recognition in crowded spaces to AI agents that answer questions and generate insights, my work lives at the intersection of deep tech and practical impact. I'm all about making AI simpler, scalable, and meaningful — not just models, but systems that matter. I enjoy solving tough problems and finding patterns in messy data. I care about clean architecture, reliable systems, and finding clarity in complexity. This page is a curated map of that path — experiments, experiences, and everything in between.
           </p>
-          <button className="btn">View Resume</button>
+          <a className="btn-resume" href={resume} target="_blank" rel="noopener noreferrer">
+  <button className="btn resume">View Resume</button>
+</a>
+
         </div>
-        {/* <div className="horizontal-line"></div> */}
+        
 
         
       </div>
