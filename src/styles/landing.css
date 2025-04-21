@@ -101,6 +101,7 @@
 .text-container {
   min-height: 100px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -120,20 +121,40 @@
   font-family: "Playfair Display";
   font-style: italic;
 }
+.fade-text:hover {
+  transform: translateX(10px); 
+  color: #3C6E71; 
+}
 
 .btn.view-more {
   display: block;
-  margin: 2rem auto;
-  padding: 0.75rem 1.5rem;
+  margin:  auto;
+  
   font-size: 1.2rem;
   background-color: #093d00;
   color: #f6f6e9;
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  animation: glow 2s infinite ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
-.btn.view-more:hover{
-  font-size: 22px;
+.btn.view-more:hover {
+  background-color: #f6f6e9;
   color: #093d00;
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #3C6E71;
+}
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px #457477, 0 0 20px #3C6E71, 0 0 30px #3C6E71;
+    transform: scale(1);
+    border-radius: 10px;
+  }
+  50% {
+    box-shadow: 0 0 20px #3C6E71, 0 0 40px #3C6E71, 0 0 60px #3C6E71;
+    transform: scale(1.05);
+    border-radius: 20px;
+  }
 }
 

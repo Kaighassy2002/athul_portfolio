@@ -29,33 +29,46 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
 
   const experienceData = [
     {
-      title: "International Virtual Assistant, Trivandrum",
+      title: " Zillion Tech, Sharjah, UAE",
+      role: "Technology Officer",
+      date: " Dec 2024 - Present",
+      points: [
+        "Led the design and deployment of a video analytics framework using NVIDIA Deepstream and Kubernetes, enabling real-time insights for retail outlets and driving ROI improvements.",
+        "Architected microservices to support modular ML pipelines and improve system maintainability",
+        "Developed AI agents to automatically generate business reports from customer behavior insights derived from video analytics using natural language queries",
+        "Built a Conversational RAG-based document retrieval system with source citations and integrated question answering capabilities.",
+      ],
+    },
+    {
+      title: "International Virtual Assistant, Trivandrum, India",
       role: "Machine Learning Engineer",
       date: "July 2022 - Present",
       points: [
-        "Designed and implemented a video analytics framework using Nvidia DeepStream and Kubernetes.",
-        "Developed virtual sensors for gas turbine engines generating 54,000 records/sec.",
-        "Processed high-fidelity data for research and development of turbine engines.",
+        "Built a real-time face recognition module for security monitoring in high footfall areas.",
+        "Developed offline virtual sensors for gas turbine engines processing 54,000 records/sec to enable real-time performance monitoring and optimization.",
+        "Engineered ETL pipelines and one-click solutions for sensor validation, anomaly detection, and trend deviation alerts using high-fidelity sensor data",
+        "Processed and synchronized large-scale sensor data to support R&D in advanced engine technologies"
       ],
     },
     {
-      title: "Katomaran Technologies, Coimbatore",
+      title: "Katomaran Technologies, Coimbatore, India",
       role: "Junior ML Engineer",
       date: "June 2020 - June 2022",
       points: [
-        "Developed knowledge graph AI chatbot handling 90% queries autonomously.",
-        "Worked on intent detection, NER, and generative models.",
-        "Optimized object detection models for edge devices.",
-        "Trained atomic action recognition models with actor-conditioned attention maps.",
+        "Designed and deployed a knowledge graph-driven Intent based chatbot using TypeDB, capable of resolving 90% of user queries autonomously.",
+        "Diagnosed object detection models and improved inference speed by 1.3X without major accuracy loss, enabling deployment on edge and low-resource devices",
+        "Trained an atomic action recognition model using actor conditioned attention map technique.",
+        "Managed end-to-end ML pipelines—from data collection and model training to deployment, testing, and reporting",
       ],
     },
     {
-      title: "Katomaran Technologies, Coimbatore",
+      title: "Katomaran Technologies, Coimbatore, India",
       role: "Machine Learning Intern",
       date: "Dec 2019 - May 2020",
       points: [
-        "Developed CV algorithms for security & safety.",
-        "Conducted statistical analysis and model improvements.",
+        "Developed computer vision algorithms for security monitoring and safety surveillance systems.",
+        "Collaborated with ML experts on model development and tool optimization.",
+        "Conducted statistical analysis of test results and performed literature reviews to propose solution strategies."
       ],
     },
   ];
@@ -122,7 +135,7 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
           </div>
 
           {/* Show this as a SEPARATE card only for index 0 */}
-          {index === 0 && activeTab === "experience" && (
+          {index === 1 && activeTab === "experience" && (
             <div className="timeline-entry extra-card">
               <div className="timeline-left" />
               <div style={{ marginTop: "-22px" }} className="timeline-line" />

@@ -12,20 +12,21 @@
   }
   
   .blog-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
-    gap: 20px;
-    padding: 30px;
-  }
-  
-  .blog-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    color: white;
-    
-  }
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  padding: 30px;
+}
+
+.blog-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  color: white;
+  height: 100%;
+}
+
   
   .blog-card img {
     width: 100%;
@@ -67,7 +68,7 @@
     font-size: 14px;
     margin-bottom: 10px;
     display: inline-block;
-    max-width: 20%;
+    max-width: fit-content;
   }
   
   .card-overlay h2 {
@@ -99,4 +100,44 @@
     font-size: 30px;
     font-weight: 500;
   }
+  
+  .recent-blogs h2 {
+    color: #3C6E71;
+    font-weight: 700;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .card-text {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .list-group-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list-group-item:hover {
+    background-color: #3C6E71;
+    color: #fff;
+  }
+  .hastag{
+    max-width: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .category-head{
+    text-align: center;
+    color: #093d00;
+    font-weight: 700;
+    font-family: "Hammersmith One", sans-serif;
+    
+  }
+
+  
   

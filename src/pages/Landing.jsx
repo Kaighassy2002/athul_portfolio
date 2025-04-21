@@ -12,13 +12,15 @@ function Landing() {
   const [step, setStep] = useState(0);
   const textRef = useRef(null);
   const btnRef = useRef(null);
+  
 
   const texts = [
     "I write code, train machines, and sometimes, they even listen.",
     "Born and raised in Kerala, I've always been drawn to the intersection of logic and creativity.",
     "Whether it's building AI models, automating workflows, or just experimenting with Python scripts that do weird but interesting things...",
     "This space isn't about a grand vision or a carefully curated theme—just a mix of experiments, ideas, and half-baked thoughts.",
-    "Think of it as my little corner of the internet where I scribble, build, and break things."
+    "Think of it as my little corner of the internet where I scribble, build, and break things.",
+    "You've seen the fragments. Now, connect the dots in "
   ];
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function Landing() {
       
       delay += 1300;
   
-      if (currentStep < texts.length + 1) {
+      if (currentStep < texts.length) {
         setTimeout(showNext, delay);
       }
     };
@@ -50,7 +52,7 @@ function Landing() {
       );
     }
 
-    if (btnRef.current && step === texts.length + 1) {
+    if (btnRef.current && step === texts.length) {
       gsap.fromTo(
         btnRef.current,
         { opacity: 0, y: 30 },
@@ -66,18 +68,26 @@ function Landing() {
         <h1 className='main-head'>Hello I'm Athul</h1>
 
         <div className='text-container'>
-          {step > 0 && step <= texts.length && (
-            <p className='fade-text' ref={textRef}>{texts[step - 1]}</p>
+          {step > 0 && step < texts.length && (
+            <p className='fade-text' ref={textRef}>
+              {texts[step - 1]}
+            </p>
+          )}
+
+          {step === texts.length && (
+            <>
+              <p className='fade-text' ref={textRef}>
+                {texts[texts.length - 1]}
+              </p>
+              <Link to={'/atlas'} style={{ textDecoration: 'none' }}>
+                <button className='btn view-more' ref={btnRef}>
+                  Atlas <i className="fa-solid fa-circle-arrow-right"></i>
+                </button>
+              </Link>
+            </>
           )}
         </div>
 
-        {step > texts.length && (
-          <Link to={'/atlas'} style={{textDecoration:'none'}}>
-            <button className='btn view-more' ref={btnRef}>
-              View More <i className="fa-solid fa-circle-arrow-right"></i>
-            </button>
-          </Link>
-        )}
       </div>
     </div>
   );

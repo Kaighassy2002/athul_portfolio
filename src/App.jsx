@@ -7,6 +7,7 @@ import Scribble from './pages/Scribble'
 import Blog from './pages/Blog'
 import MaintenanceOverlay from './components/MaintenceOverlay'
 import Contact from './pages/Contact'
+import BlogDetails from './pages/BlogDetails'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/scribble' element={<Scribble/>}/>
         <Route path='/contact' element={<Contact/>}/>
+        <Route path='/blog/:id' element={<BlogDetails/>}/>
       </Routes>
     </>
   )
