@@ -27,7 +27,9 @@ function Footer() {
               © {new Date().getFullYear()} Athul. All rights reserved.
             </p>
             <p className="footer-love">
-              Made with <span>❤️</span> by Athul
+              Made with <span>❤️</span> by <a style={{textDecoration:"none", color:"white"}} href="https://portfolio-my-alpha.vercel.app/" target="_blank" rel="noopener noreferrer">
+              Kaighassy Suresh
+            </a>
             </p>
           </footer>
         </div>

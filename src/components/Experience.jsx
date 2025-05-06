@@ -134,24 +134,7 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
             </div>
           </div>
 
-          {/* Show this as a SEPARATE card only for index 0 */}
-          {index === 1 && activeTab === "experience" && (
-            <div className="timeline-entry extra-card">
-              <div className="timeline-left" />
-              <div style={{ marginTop: "-22px" }} className="timeline-line" />
-              <div className="timeline-right">
-                <div className="extra-experience-info">
-                  <h5 style={{ color: "#f6f6e9" }}>
-                    Machine Learning Engineer
-                  </h5>
-                  <p>
-                    Hands-on expertise in scalable video analytics systems,
-                    real-time data engineering.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+          
         </React.Fragment>
       ))}
     </div>
