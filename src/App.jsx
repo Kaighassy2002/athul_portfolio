@@ -1,5 +1,5 @@
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import Landing from './pages/Landing'
 import Atlas from './pages/Atlas'
@@ -8,10 +8,20 @@ import Blog from './pages/Blog'
 import MaintenanceOverlay from './components/MaintenceOverlay'
 import Contact from './pages/Contact'
 import BlogDetails from './pages/BlogDetails'
-
+import { useEffect } from 'react'
+import { initGA, sendPageView } from './utils/GA'
 
 function App() {
-  
+  const location = useLocation()
+
+  useEffect(() => {
+    initGA()
+  }, [])
+
+  useEffect(() => {
+    sendPageView(location.pathname)
+  }, [location])
+
 
   return (
     <>
