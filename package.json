@@ -10,6 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lexical/code": "^0.32.0",
+    "@lexical/link": "^0.32.0",
+    "@lexical/list": "^0.32.0",
+    "@lexical/markdown": "^0.32.0",
+    "@lexical/react": "^0.32.0",
+    "@lexical/rich-text": "^0.32.0",
+    "@lexical/table": "^0.32.0",
     "@react-three/drei": "^10.0.5",
     "@react-three/fiber": "^9.1.1",
     "aos": "^2.3.4",
@@ -17,6 +24,7 @@
     "bootstrap": "^5.3.3",
     "framer-motion": "^12.5.0",
     "gsap": "^3.12.7",
+    "lexical": "^0.32.0",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",

@@ -325,7 +325,7 @@ const [filteredCertificates, setFilteredCertificates] = useState([]);
   {(filteredCertificates.length ? filteredCertificates : certificate).map((cert, index) => (
     <SwiperSlide key={index}>
       <div className="card">
-        <img className="card__background" src={cert.image} alt={cert.category} />
+        <img loading="lazy" className="card__background" src={cert.image} alt={cert.category} />
         <div className="card__content | flow">
           <div className="card__content--container | flow">
             <h2 className="card__title">{cert.category}</h2>
