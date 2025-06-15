@@ -107,7 +107,9 @@
     color: #3C6E71;
     font-weight: 700;
   }
-  
+  .card{
+    width: 15rem;
+  }
   .card-title {
     font-size: 1.25rem;
     font-weight: 600;

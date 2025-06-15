@@ -1,0 +1,107 @@
+.scribble-main-container {
+  background-image: url('../assets/images/SCRIBBLE (5).jpg');
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+.scribble-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.scribble-heading {
+  color: #fff;               
+  font-size: 6rem;           
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
+  font-family: "Hammersmith One";
+  animation: fadeSlideUp 1s ease-out forwards;
+}
+.scribble-container p {
+  color: #d4d0d0;
+  /* font-size: 1.5rem; */
+  font-weight: 400;
+  margin-top: 1rem;
+  opacity: 0;
+  animation: fadeSlideUp 1s ease-out 0.5s forwards;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.scribble-list-contaniner{
+    background-image: url('../assets/images/scribble-list.jpg');
+  height: 50vh;
+  background-position: center;
+  background-size: cover;
+  /* background-attachment: fixed; */
+  display: flex;
+  flex-direction: column; 
+}
+.scribble-list {
+  list-style: none;
+  padding-left: 0;
+  border-left: 2px solid #ccc;
+  margin-left: 20px;
+}
+
+.scribble-item {
+  position: relative;
+  padding: 10px 0 10px 20px;
+  margin-left: 10px;
+}
+
+.scribble-dot {
+  position: absolute;
+  left: -12px;
+  top: 23px;
+  width: 10px;
+  height: 10px;
+  background-color: #3C6E71;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #3C6E71;
+}
+
+.scribble-content {
+  font-size: 1.05rem;
+  color: #eae1e1;
+  transition: color 0.3s ease;
+}
+
+.scribble-content strong {
+  color: #093d00;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.scribble-content:hover strong {
+  color: #3C6E71;
+  text-decoration: underline;
+}
+
+.scribble-date {
+  color: #f6f6e9;
+  font-size: 0.9rem;
+
+}
+
+.scribble-list-heading{
+   color: #fff;               
+  font-size: 4rem;           
+  font-weight: bold;
+  font-family: "Hammersmith One";
+  text-align: center;
+}

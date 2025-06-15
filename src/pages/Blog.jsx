@@ -14,6 +14,7 @@ function Blog() {
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(3);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const blogItems = allBlogs.filter((blog) => blog.type === "blog");
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -52,9 +53,9 @@ function Blog() {
     .slice(0, 3);
 
   // Pick the first blog for each of the selected categories
-   const featuredBlogs = randomCategories.map((tag) =>
-    allBlogs.find((blog) => blog.tags?.includes(tag))
-  );
+  const featuredBlogs = randomCategories.map((tag) =>
+  blogItems.find((blog) => blog.tags?.includes(tag))
+);
 
   return (
     <div className="blog-container">
@@ -96,9 +97,9 @@ function Blog() {
           <div className="row">
             {/* Blog Cards */}
            <div className="col-md-8">
-  <div className="row g-5">
+  <div className="row g-2">
     {/* Card View (First 6 Blogs) */}
-    {allBlogs
+    {blogItems
       .filter((blog) => !selectedCategory || blog.tags?.includes(selectedCategory))
       .slice(0, 6) // First two rows (3 per row)
       .map((blog) => (
@@ -130,8 +131,41 @@ function Blog() {
   </div>
 
   {/* List View (Remaining Blogs) */}
-  <div className="mt-5">
-    {allBlogs
+  
+</div>
+
+
+            {/* Sidebar */}
+            <div className="col-md-4 " >
+              <div className="p-4 bg-light rounded shadow-sm h-100">
+                <h3 className="mb-3 category-head">Categories</h3>
+                <ul className="list-group">
+                  <li
+                    className={`list-group-item ${
+                      selectedCategory === null ? "active" : ""
+                    }`}
+                    onClick={() => setSelectedCategory(null)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    All
+                  </li>
+                  {uniqueCategories.map((tags) => (
+                    <li
+                      key={tags}
+                      className={`list-group-item ${
+                        selectedCategory === tags ? "active" : ""
+                      }`}
+                      onClick={() => setSelectedCategory(tags)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {tags}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="mt-5 ">
+    {blogItems
       .filter((blog) => !selectedCategory || blog.tags?.includes(selectedCategory))
       .slice(6, visibleCount) // From 7th blog onward
       .map((blog) => (
@@ -160,45 +194,13 @@ function Blog() {
       ))}
   </div>
 
-  {visibleCount < allBlogs.length && (
+  {visibleCount < blogItems.length && (
     <div className="text-center mt-4">
       <button className="btn btn-outline-primary" onClick={handleLoadMore}>
         Load More
       </button>
     </div>
   )}
-</div>
-
-
-            {/* Sidebar */}
-            <div className="col-md-4">
-              <div className="p-4 bg-light rounded shadow-sm">
-                <h3 className="mb-3 category-head">Categories</h3>
-                <ul className="list-group">
-                  <li
-                    className={`list-group-item ${
-                      selectedCategory === null ? "active" : ""
-                    }`}
-                    onClick={() => setSelectedCategory(null)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    All
-                  </li>
-                  {uniqueCategories.map((tags) => (
-                    <li
-                      key={tags}
-                      className={`list-group-item ${
-                        selectedCategory === tags ? "active" : ""
-                      }`}
-                      onClick={() => setSelectedCategory(tags)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {tags}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
       </div>

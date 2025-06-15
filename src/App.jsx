@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import BlogDetails from './pages/BlogDetails'
 import { useEffect } from 'react'
 import { initGA, sendPageView } from './utils/GA'
+import ScribbleDetails from './pages/ScribbleDetails'
 
 function App() {
   const location = useLocation()
@@ -34,6 +35,7 @@ function App() {
         <Route path='/scribble' element={<Scribble/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/blog/:id' element={<BlogDetails/>}/>
+        <Route path='/scribble/:id' element={<ScribbleDetails/>}/>
       </Routes>
     </>
   )
