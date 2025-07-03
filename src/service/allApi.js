@@ -20,3 +20,12 @@ export const blogByIdAPI = async (id) => {
 export const listAllScribblesAPI= async()=>{
   return  await commonAPI("GET",`${SERVER_URL}/list-scribble`)
 }
+
+
+export const getTeckStackAPI= async()=>{
+  return  await commonAPI("GET",`${SERVER_URL}/tech-items`)
+}
+
+export const getProjectAPI= async()=>{
+  return  await commonAPI("GET",`${SERVER_URL}/getprojects`)
+}

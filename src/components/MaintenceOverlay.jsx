@@ -4,7 +4,7 @@ import React from "react";
 const MaintenanceOverlay = () => {
     return (
         <div className="ribbon">
-          🛠️ Site Maintenance
+          🛠️ Site Under Maintenance
         </div>
       );
     };

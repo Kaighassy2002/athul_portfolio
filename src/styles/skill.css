@@ -87,24 +87,37 @@
   height: 50px;
   padding: 2px 8px;
 }
-.tool-name {
+.tooltip{
   position: absolute;
-  top: -35px;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #549066;
-  color: #fff;
-  padding: 4px 8px;
+  background-color: rgba(84, 144, 102, 0.85);
+  color: white;
+  min-width: 200px;          
+  max-width: 280px;
+  padding: 5px 9px;
+  border-radius: 6px;
   font-size: 0.75rem;
-  border-radius: 5px;
+  white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  white-space: nowrap;
-  z-index: 10;
-}
+  z-index: 1000;
 
-.skill-icon:hover .tool-name {
+  
+}
+.tool-name {
+  font-weight: bold;
+}
+.tool-description {
+  display: block;
+  font-size: 0.7rem;
+  color: #d9f5e3;
+  font-style: italic;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.skill-icon:hover .tooltip {
   opacity: 1;
 }
 @media (max-width: 1200px) {

@@ -1,77 +1,164 @@
-.project-container{
-    background-color: #f6f6e9;
-   padding: 10% 0px;
-}
-.project-container h3{
-    
-    color: #457d58 ;
-    text-align: center;
-    font-family: "Hammersmith One";
-    margin: 2rem 0 4rem 0;
-    font-size: 31px;
+.project-container {
+  padding: 60px 20px;
+  background-color: #cbddd1;
+  background-image:
+    radial-gradient(circle, rgba(60, 110, 113, 0.1) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(60, 110, 113, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 110, 113, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 100vh;
 }
 
-  
+.project-container h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #284b63;
+  margin-bottom: 40px;
+  position: relative;
+}
+
 .project-cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .card {
-    width: 260px;
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-4px);
-  }
-  
-  .card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-  }
-  
-  .card-content {
-    padding: 15px 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-  }
-  
-  .card-content h4 {
-    font-size: 1.1rem;
-    margin: 0 0 8px;
-    color: #222;
-  }
-  
-  .card-content p {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 10px;
-    line-height: 1.4;
-  }
-  
-  .project-link {
-    margin-top: auto;
-    font-size: 0.85rem;
-    padding: 6px 12px;
-    background-color: #093d00;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .project-link:hover {
-    background-color: #5e9771;
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 5px 10rem;
+}
+
+.card-project {
+  background: #ffffff transparent;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-project:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-project img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-content h4 {
+  margin: 0;
+  color: #3c6e71;
+  font-size: 1.25rem;
+}
+
+.card-content p {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 10px 0 15px;
+  line-height: 1.5;
+}
+
+.tech-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tech-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #e6f4ea;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 1px 3px rgba(60, 110, 113, 0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.tech-item:hover {
+  transform: scale(1.1);
+}
+
+.tech-logo {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 5px;
+  object-fit: cover;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.tech-name {
+  position: absolute;
+  bottom: -25px;
+  background-color: #2e5e4e;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+}
+
+.tech-item:hover .tech-name {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.more-tech {
+  background-color: #b7ebb9;
+  color: #16270de4;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 8px 2px rgba(22, 39, 13, 0.3); /* glow effect */
+}
+
+.more-tech:hover {
+  background-color: #a1dca4;
+  box-shadow: 0 0 12px 4px rgba(22, 39, 13, 0.5); /* stronger glow on hover */
+}
+
+
+.project-link {
+  display: inline-block;
+  text-align: center;
+  margin-top: auto;
+  padding: 10px 15px;
+  background-color: #3c6e71;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.project-link:hover {
+  background-color: #284b63;
+}
+
+.read-more-toggle {
+  color: #3C6E71;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: underline;
+}

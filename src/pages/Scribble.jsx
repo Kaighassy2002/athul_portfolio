@@ -41,11 +41,11 @@ function Scribble() {
 
         <div className="  text-center  scribble-container ">
           <h1 className="scribble-heading">SCRIBBLE</h1>
-          <p>A space where your thoughts come to life.</p>
+          <p>Not a blog. Just me oversharing</p>
         </div>
       </div>
      <div className="scribble-list-contaniner p-5">
-      <h3 className="scribble-list-heading">Let your pen wander.</h3>
+      <h3 className="scribble-list-heading">Stuff that just… happened.</h3>
   {loading ? (
     <p className="text-center">Loading...</p>
   ) : scribbleItems.length === 0 ? (

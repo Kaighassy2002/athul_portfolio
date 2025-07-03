@@ -43,7 +43,7 @@
 }
 .scribble-list-contaniner{
     background-image: url('../assets/images/scribble-list.jpg');
-  height: 50vh;
+  
   background-position: center;
   background-size: cover;
   /* background-attachment: fixed; */
