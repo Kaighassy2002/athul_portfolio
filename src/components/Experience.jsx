@@ -1,361 +1,525 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { A11y, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 import "../styles/experience.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/pagination";
 import { getAllcertificatesAPI } from "../service/allApi";
-
-
 
 gsap.registerPlugin(ScrollTrigger);
 
+const route = [
+  {
+    code: "01",
+    place: "Kerala",
+    region: "Thrissur · origin",
+    years: "Aug 2019",
+    node: "home",
+    roles: [
+      {
+        title: "APJ Abdul Kalam Technological University",
+        role: "B.Tech in Computer Science",
+        date: "Aug 2019",
+        points: [
+          "Coursework: Music Genre Recognition using MFCCs",
+          "Seminar: Effective Machine Learning with Cloud TPU",
+        ],
+      },
+    ],
+  },
+  {
+    code: "02",
+    place: "Coimbatore",
+    region: "Tamil Nadu, India",
+    years: "2019 — 2022",
+    node: "coimbatore",
+    roles: [
+      {
+        title: "Katomaran Technologies",
+        role: "Machine Learning Intern",
+        date: "Dec 2019 — May 2020",
+        points: [
+          "Computer vision for security monitoring and safety surveillance.",
+          "Statistical analysis of test results and literature reviews for solution strategy.",
+        ],
+      },
+      {
+        title: "Katomaran Technologies",
+        role: "Junior Machine Learning Engineer",
+        date: "June 2020 — July 2022",
+        points: [
+          "Computer vision for surveillance and safety monitoring with OpenCV, TensorFlow, and deep learning.",
+          "Object detection with YOLO and CNN architectures, deployed for real-world monitoring.",
+          "Inference sped up 1.3× through model optimization while holding production accuracy.",
+          "End-to-end ML pipelines from data collection and training to deployment, testing, and reporting.",
+        ],
+      },
+    ],
+  },
+  {
+    code: "03",
+    place: "Trivandrum",
+    region: "Kerala, India",
+    years: "2022 — 2025",
+    node: "trivandrum",
+    roles: [
+      {
+        title: "International Virtual Assistance",
+        role: "Machine Learning Engineer",
+        date: "July 2022 — Aug 2025",
+        points: [
+          "Real-time face recognition for security monitoring in high-footfall environments.",
+          "Facial detection, feature extraction, and identity verification for live surveillance.",
+          "ETL and one-click tools for sensor validation, anomaly detection, and trend-deviation alerts.",
+          "Large-scale sensor datasets processed and synchronized for engine research and operations.",
+        ],
+      },
+    ],
+  },
+  {
+    code: "04",
+    place: "Sharjah",
+    region: "United Arab Emirates",
+    years: "2024 — 2025",
+    node: "sharjah",
+    roles: [
+      {
+        title: "Zillion Tech",
+        role: "Technology Officer",
+        date: "Dec 2024 — Aug 2025",
+        points: [
+          "GPU-accelerated real-time video analytics with NVIDIA DeepStream, OpenCV, and TensorRT for retail intelligence.",
+          "Multi-camera pipelines for people detection, tracking, and person re-identification.",
+          "Occupancy, queue, customer-journey, and behavioral analytics from live video streams.",
+          "Inference optimized with quantization and TensorRT for low-latency edge GPU deployment.",
+          "Scalable video systems for concurrent camera streams and real-time event analytics in production.",
+        ],
+      },
+    ],
+  },
+  {
+    code: "05",
+    place: "Chennai",
+    region: "Tamil Nadu, India",
+    years: "2025 — Present",
+    node: "chennai",
+    roles: [
+      {
+        title: "CBTS",
+        role: "Senior Engineer – AI",
+        date: "Sep 2025 — Present",
+        points: [
+          "Graph-first AI platform for data modernization — dependency discovery, risk assessment, migration-wave planning, and target-state recommendations, cutting assessment effort by ~60%.",
+          "Conversational AI over Microsoft Fabric and enterprise data sources for self-service analytics.",
+          "MCP-based SDLC automation for business documents, Jira artifacts, wireframes, and design-to-code, reducing project initiation effort by more than 70%.",
+          "Multi-agent workflows with LangGraph, LangChain, RAG, and vector databases for knowledge discovery and modernization analysis.",
+          "Partnered across teams to drive enterprise AI adoption through intelligent automation and decision support.",
+        ],
+      },
+      {
+        title: "CBTS",
+        role: "1st Place — Enterprise Hackathon",
+        date: "2026",
+        points: [
+          "Autonomous Retail Manager: Developed an AI-powered autonomous retail optimization platform capable of integrating with existing analytics engines through adapter-based architecture.",
+          "The solution provided inventory optimization, dynamic pricing recommendations, retail resilience analysis, and simulation-driven decision support for operational planning.",
+        ],
+      },
+    ],
+  },
+];
+
+const formatMarkDate = (value) => {
+  if (!value) return "";
+  const dmy = String(value).match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+  const parsed = dmy
+    ? new Date(`${dmy[3]}-${dmy[2].padStart(2, "0")}-${dmy[1].padStart(2, "0")}`)
+    : new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  return parsed.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
 const Experience = () => {
-  const [activeTab, setActiveTab] = useState("experience");
-  const timelineRef = useRef([]);
-
-  const [certificate,setcertificate] = useState([])
-  const [showFilter, setShowFilter] = useState(false);
-const [filters, setFilters] = useState({
-  category: "",
-  organization: "",
-  date: "",
-});
-const [filteredCertificates, setFilteredCertificates] = useState([]);
-
-
-  const experienceData = [
-    {
-      title: " Zillion Tech, Sharjah, UAE",
-      role: "Technology Officer",
-      date: " Dec 2024 - Present",
-      points: [
-        "Led the design and deployment of a video analytics framework using NVIDIA Deepstream and Kubernetes, enabling real-time insights for retail outlets and driving ROI improvements.",
-        "Architected microservices to support modular ML pipelines and improve system maintainability",
-        "Developed AI agents to automatically generate business reports from customer behavior insights derived from video analytics using natural language queries",
-        "Built a Conversational RAG-based document retrieval system with source citations and integrated question answering capabilities.",
-      ],
-    },
-    {
-      title: "International Virtual Assistant, Trivandrum, India",
-      role: "Machine Learning Engineer",
-      date: "July 2022 - Present",
-      points: [
-        "Built a real-time face recognition module for security monitoring in high footfall areas.",
-        "Developed offline virtual sensors for gas turbine engines processing 54,000 records/sec to enable real-time performance monitoring and optimization.",
-        "Engineered ETL pipelines and one-click solutions for sensor validation, anomaly detection, and trend deviation alerts using high-fidelity sensor data",
-        "Processed and synchronized large-scale sensor data to support R&D in advanced engine technologies"
-      ],
-    },
-    {
-      title: "Katomaran Technologies, Coimbatore, India",
-      role: "Junior ML Engineer",
-      date: "June 2020 - June 2022",
-      points: [
-        "Designed and deployed a knowledge graph-driven Intent based chatbot using TypeDB, capable of resolving 90% of user queries autonomously.",
-        "Diagnosed object detection models and improved inference speed by 1.3X without major accuracy loss, enabling deployment on edge and low-resource devices",
-        "Trained an atomic action recognition model using actor conditioned attention map technique.",
-        "Managed end-to-end ML pipelines—from data collection and model training to deployment, testing, and reporting",
-      ],
-    },
-    {
-      title: "Katomaran Technologies, Coimbatore, India",
-      role: "Machine Learning Intern",
-      date: "Dec 2019 - May 2020",
-      points: [
-        "Developed computer vision algorithms for security monitoring and safety surveillance systems.",
-        "Collaborated with ML experts on model development and tool optimization.",
-        "Conducted statistical analysis of test results and performed literature reviews to propose solution strategies."
-      ],
-    },
-  ];
-
-  const educationData = [
-    {
-      title: "APJ Abdul Kalam Technological University, Kerala",
-      role: "B.Tech in Computer Science and Engineering",
-      date: "Aug 2019",
-      points: [
-        "GPA: 7.39 / 10.0",
-        "Coursework: Music Genre Recognition using MFCCs",
-        "Seminar: Effective Machine Learning with Cloud TPU",
-        "Internshala Campus Ambassador - led a marketing & ad campaign to increase memberships",
-      ],
-    },
-  ];
+  const sectionRef = useRef(null);
+  const [certificate, setCertificate] = useState([]);
+  const [certsLoading, setCertsLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    category: "",
+    organization: "",
+  });
 
   useEffect(() => {
-    // Animate each timeline-entry as it scrolls into view
-    timelineRef.current.forEach((el) => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 84%",
+        onEnter: () => sectionRef.current?.classList.add("is-in"),
+        onEnterBack: () => sectionRef.current?.classList.add("is-in"),
+      });
+
+      if (reduced) return;
+
       gsap.fromTo(
-        el,
-        { opacity: 0, y: 50 },
+        ".career-head > *",
+        { y: 22, opacity: 0 },
         {
-          opacity: 1,
           y: 0,
-          duration: 1,
+          opacity: 1,
+          duration: 0.75,
+          stagger: 0.08,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none",
+            trigger: sectionRef.current,
+            start: "top 78%",
+            toggleActions: "play none none reverse",
           },
         }
       );
-    });
-  }, [activeTab]);
 
-  const renderTimeline = (dataArray) => (
-    <div className="timeline-vertical">
-      {dataArray.map((item, index) => (
-        <React.Fragment key={index}>
-          <div
-            className="timeline-entry"
-            ref={(el) => (timelineRef.current[index] = el)}
-          >
-            <div className="timeline-left">
-              <h4>{item.title}</h4>
-              <hr />
-              <p className="timeline-date">{item.date}</p>
-            </div>
-            <div className="timeline-line" />
-            <div className="timeline-right">
-              <p className="timeline-role">
-                <strong>{item.role}</strong>
-              </p>
-              <ul>
-                {item.points.map((point, idx) => (
-                  <li key={idx}>{point}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+      gsap.fromTo(
+        ".path-watermark",
+        { y: 36, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
 
-          
-        </React.Fragment>
-      ))}
-    </div>
-  );
+      gsap.fromTo(
+        ".path-fill",
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".path-route",
+            start: "top 72%",
+            end: "bottom 55%",
+            scrub: 0.4,
+          },
+        }
+      );
 
-  //get All certificates
+      gsap.fromTo(
+        ".path-station",
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".path-route",
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.to(".path-traveler", {
+        y: () => {
+          const route = sectionRef.current?.querySelector(".path-route");
+          return Math.max(0, (route?.offsetHeight || 0) - 42);
+        },
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".path-route",
+          start: "top 58%",
+          end: "bottom 48%",
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+          onEnter: () => {
+            sectionRef.current
+              ?.querySelector(".path-station")
+              ?.classList.add("is-active");
+          },
+          onUpdate: (self) => {
+            const stations = gsap.utils.toArray(".path-station");
+            if (!stations.length) return;
+            const idx = Math.min(
+              stations.length - 1,
+              Math.floor(self.progress * stations.length)
+            );
+            stations.forEach((station, index) => {
+              station.classList.toggle("is-passed", index < idx);
+              station.classList.toggle("is-active", index === idx);
+            });
+          },
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
         const response = await getAllcertificatesAPI();
         if (response.status === 200) {
-          const sortedData = response.data.data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-          setcertificate(sortedData);
+          const sortedData = response.data.data.sort(
+            (a, b) => new Date(b.startDate) - new Date(a.startDate)
+          );
+          setCertificate(sortedData);
         }
       } catch (error) {
         console.error("Error fetching certificates:", error);
+      } finally {
+        setCertsLoading(false);
       }
     };
-  
+
     fetchCertificates();
   }, []);
-  
 
-  //toggle button 
+  useEffect(() => {
+    if (certsLoading) return undefined;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return undefined;
 
-  const toggleFilter = () => {
-    setShowFilter(!showFilter);
-  };
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".cert-head > *",
+        { y: 18, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          stagger: 0.07,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".certificate-section",
+            start: "top 84%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".cert-carousel-wrap",
+        { y: 22, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".certificate-container",
+            start: "top 86%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [certsLoading, certificate]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
   };
-  
-  //filter
 
-
-  useEffect(() => {
-    const filtered = certificate
+  const filteredCertificates = useMemo(() => {
+    return certificate
       .filter((cert) => {
         return (
-          (filters.category === "" || cert.category.toLowerCase().includes(filters.category.toLowerCase())) &&
-          (filters.organization === "" || cert.organization.toLowerCase().includes(filters.organization.toLowerCase()))
+          (filters.category === "" || cert.category === filters.category) &&
+          (filters.organization === "" ||
+            cert.organization === filters.organization)
         );
       })
-      .sort((a, b) => new Date(b.startDate) - new Date(a.startDate)); // Sort by newest first
-  
-    setFilteredCertificates(filtered);
+      .sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
   }, [filters, certificate]);
-  
+
+  const categories = useMemo(
+    () => [...new Set(certificate.map((cert) => cert.category).filter(Boolean))],
+    [certificate]
+  );
+
+  const organizations = useMemo(
+    () =>
+      [...new Set(certificate.map((cert) => cert.organization).filter(Boolean))],
+    [certificate]
+  );
+
   const clearFilters = () => {
     setFilters({ category: "", organization: "" });
   };
-  
+
+  const hasActiveFilters = filters.category || filters.organization;
 
   return (
-    <div className="experience-container">
-      <div className="section-container">
-        <h3>
-          My Career <i className="fa-solid fa-user-graduate"></i>
-        </h3>
-        <div className="tab-switch">
-          <button
-            className={activeTab === "education" ? "active" : ""}
-            onClick={() => setActiveTab("education")}
-          >
-            Education
-          </button>
-          <button
-            className={activeTab === "experience" ? "active" : ""}
-            onClick={() => setActiveTab("experience")}
-          >
-            Experience
-          </button>
+    <section className="experience-container" id="atlas-path" ref={sectionRef}>
+      <span className="path-watermark" aria-hidden="true">
+        04
+      </span>
+      <div className="career-wrap">
+        <div className="career-head">
+          <p className="career-kicker">04 — Path</p>
+          <h2>The route</h2>
+          <p className="career-lede">
+            Kerala to Chennai — the same places marked on the globe, read as a
+            working life.
+          </p>
         </div>
-        <div className="tab-content">
-          {activeTab === "experience" && renderTimeline(experienceData)}
-          {activeTab === "education" && renderTimeline(educationData)}
+
+        <div className="path-route">
+          <span className="path-line" aria-hidden="true" />
+          <span className="path-fill" aria-hidden="true" />
+          <span className="path-traveler" aria-hidden="true" />
+          {route.map((station) => (
+            <article className="path-station" key={station.node}>
+              <div className="path-node">
+                <span>{station.code}</span>
+              </div>
+              <div className="path-body">
+                <div className="path-place">
+                  <h3>{station.place}</h3>
+                  <p>
+                    {station.region}
+                    <i />
+                    {station.years}
+                  </p>
+                </div>
+                {station.roles.map((item) => (
+                  <div className="path-role" key={`${item.role}-${item.date}`}>
+                    <p className="timeline-date">{item.date}</p>
+                    <h4>{item.role}</h4>
+                    <p className="timeline-org">{item.title}</p>
+                    <ul>
+                      {item.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
- 
-        
-
-        {/* certificate-section */}
 
       <div className="certificate-section">
-        <h3>
-          Certificates <i class="fa-solid fa-award"></i>
-        </h3>
-
-        {/* filter-certificate */}
-
-
-        <div className="filter-certificate-section">
-  <button className="btn" onClick={toggleFilter}>
-    <i className="fa-solid fa-filter filter"></i>
-  </button>
-  {showFilter && (
-  <div className="filter-panel">
-    <button className="close-btn" onClick={toggleFilter}>
-      <i className="fa-solid fa-xmark"></i>
-      </button>
-    <div className="filter-panel-header">
-      <h4>Filter Certificates</h4>
-      
-    </div>
-
-    <div className="filter-input-container">
-  <select
-    className="filter-input"
-    name="category"
-    value={filters.category}
-    onChange={handleFilterChange}
-  >
-    <option value="" disabled>Select Category</option>
-    <option value="Data Science">Data Science</option>
-    <option value="Machine Learning">Machine Learning</option>
-    <option value="System Design">System Design</option>
-    
-  </select>
-
-  <select
-    className="filter-input "
-    name="organization"
-    value={filters.organization}
-    onChange={handleFilterChange}
-  >
-    <option value="" disabled>Select Organization</option>
-    <option value="Udemy">Udemy</option>
-    <option value="Coursera">Coursera</option>
-    
-    
-  </select>
-</div>
-
-    
-
-    {/* Clear Button */}
-    <button className="clear-btn" onClick={clearFilters}>
-      Clear 
-    </button>
-  </div>
-)}
-
-
-</div>
-
-{/* certificates */}
-
-<div className="certificate-container">
-  {filteredCertificates.length === 0 && filters.category === "" && filters.organization === "" && filters.date === "" ? (
-    <p>Loading...</p>
-  ) : (filteredCertificates.length === 0 ? (
-    <p className="no-items">No certificates found for selected filters.</p>
-  ) : (
-<Swiper
-  modules={[Autoplay, Pagination]}
-  spaceBetween={20}
-  slidesPerView={1}
-  pagination={{
-    el: '.swiper-pagination',
-    clickable: true,
-    dynamicBullets: false, // we’re handling custom bullet visibility
-  }}
-  autoplay={{ delay: 2500, disableOnInteraction: false }}
-  breakpoints={{
-    0: { slidesPerView: 1, spaceBetween: 10 },
-    640: { slidesPerView: 1 },
-    768: { slidesPerView: 2 },
-    1024: { slidesPerView: 4 },
-  }}
-  onPaginationUpdate={(swiper, paginationEl) => {
-    const bullets = paginationEl.querySelectorAll('.swiper-pagination-bullet');
-    bullets.forEach((b, i) => {
-      b.style.display = 'none'; // hide all bullets
-
-      if (
-        i === swiper.activeIndex ||
-        i === swiper.activeIndex - 1 ||
-        i === swiper.activeIndex + 1
-      ) {
-        b.style.display = 'block'; // show active, prev, next
-      }
-    });
-  }}
->
-  {(filteredCertificates.length ? filteredCertificates : certificate).map((cert, index) => (
-    <SwiperSlide key={index}>
-      <div className="card">
-        <img loading="lazy" className="card__background" src={cert.image} alt={cert.category} />
-        <div className="card__content | flow">
-          <div className="card__content--container | flow">
-            <h2 className="card__title">{cert.category}</h2>
-            <p className="card__description">
-              {cert.organization} | {cert.startDate}
-            </p>
+        <div className="cert-head">
+          <div>
+            <p className="career-kicker">Field marks</p>
+            <h3>Certificates</h3>
           </div>
-          <a
-            href={cert.links}
-            className="card__button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Certificate
-          </a>
+          <div className="cert-toolbar">
+            <select
+              className="filter-input"
+              name="category"
+              value={filters.category}
+              onChange={handleFilterChange}
+            >
+              <option value="">All categories</option>
+              {categories.map((category) => (
+                <option value={category} key={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <select
+              className="filter-input"
+              name="organization"
+              value={filters.organization}
+              onChange={handleFilterChange}
+            >
+              <option value="">All organizations</option>
+              {organizations.map((organization) => (
+                <option value={organization} key={organization}>
+                  {organization}
+                </option>
+              ))}
+            </select>
+            {hasActiveFilters ? (
+              <button type="button" className="clear-btn" onClick={clearFilters}>
+                Clear
+              </button>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="certificate-container">
+          {certsLoading ? (
+            <div className="cert-carousel-wrap" aria-hidden="true">
+              <div className="cert-grid">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <div className="cert-card is-skeleton" key={index} />
+                ))}
+              </div>
+            </div>
+          ) : filteredCertificates.length === 0 ? (
+            <p className="no-items">No certificates found for selected filters.</p>
+          ) : (
+            <div className="cert-carousel-wrap">
+              <Swiper
+                key={`${filters.category}-${filters.organization}-${filteredCertificates.length}`}
+                className="cert-swiper"
+                modules={[Navigation, A11y]}
+                navigation
+                rewind
+                watchOverflow
+                grabCursor
+                spaceBetween={22}
+                slidesPerView={1}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  980: { slidesPerView: 3 },
+                }}
+              >
+                {filteredCertificates.map((cert, index) => (
+                  <SwiperSlide key={cert._id || index}>
+                    <article className="cert-card">
+                      <div className="cert-card-media">
+                        <img
+                          loading="lazy"
+                          className="cert-card-image"
+                          src={cert.image}
+                          alt={`${cert.organization} — ${cert.category}`}
+                        />
+                        {cert.links ? (
+                          <a
+                            href={cert.links}
+                            className="cert-card-peek"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            View certificate
+                            <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                          </a>
+                        ) : null}
+                      </div>
+                      <div className="cert-card-body">
+                        <span className="cert-tag">{cert.category}</span>
+                        <h4>{cert.organization}</h4>
+                        <p>{formatMarkDate(cert.startDate)}</p>
+                      </div>
+                    </article>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
         </div>
       </div>
-    </SwiperSlide>
-  ))}
-  <div className="swiper-pagination"></div>
-</Swiper>
-
-  ))}
-</div>
-
-
-
-
-      </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,0 +1,322 @@
+.plate-engage {
+  width: 100%;
+  margin: 48px 0 8px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.plate-engage-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.plate-engage-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.plate-engage-btn small {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.plate-engage-btn i {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.plate-engage-btn:hover,
+.plate-engage-btn:focus-visible,
+.plate-engage-btn.is-open {
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  border-color: var(--line);
+}
+
+.plate-engage-btn.is-liked i {
+  color: var(--rose);
+}
+
+.plate-engage-btn.is-pulse i {
+  transform: scale(1.18);
+}
+
+.plate-share-wrap {
+  position: relative;
+}
+
+.share-sheet {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 6;
+  width: min(220px, 78vw);
+  padding: 12px;
+  background: var(--card-solid);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-hover);
+  animation: passportRise 0.22s var(--ease-out);
+}
+
+.share-sheet-kicker {
+  margin: 0 8px 8px;
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.share-sheet-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+.share-sheet-item:hover,
+.share-sheet-item:focus-visible {
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.share-sheet-item i {
+  width: 16px;
+  color: var(--ink-soft);
+}
+
+.plate-comments {
+  margin-top: 36px;
+}
+
+.plate-comments-head .notes-kicker {
+  opacity: 1;
+  margin-bottom: 8px;
+}
+
+.plate-comments-head h2 {
+  margin: 0 0 22px;
+  font-family: var(--font-body);
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: var(--type-section-track);
+  color: var(--ink-title);
+}
+
+.plate-composer {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.plate-composer textarea {
+  resize: vertical;
+  min-height: 84px;
+}
+
+.plate-composer-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.notes-more-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+  box-shadow: none;
+}
+
+.plate-replying {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.plate-replying button {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.plate-comments-empty,
+.plate-engage-error {
+  margin: 0 0 18px;
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.plate-engage-error {
+  color: var(--rose);
+}
+
+.plate-comment-list {
+  display: grid;
+  gap: 22px;
+}
+
+.plate-comment {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 14px;
+}
+
+.plate-comment-body header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.plate-comment-body strong {
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.plate-comment-body time {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.plate-comment-pending {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.plate-comment-body p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.plate-comment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.plate-comment-actions button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.plate-comment-actions button:hover,
+.plate-comment-actions button.is-confirm {
+  color: var(--ink);
+}
+
+.plate-comment-actions button.is-confirm {
+  color: var(--rose);
+}
+
+.plate-comment-thread {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+  padding-left: 8px;
+  border-left: 1px solid var(--line);
+}
+
+.plate-comment.is-reply {
+  grid-template-columns: 28px minmax(0, 1fr);
+}
+
+.plate-comment.is-reply .user-avatar {
+  width: 28px;
+  height: 28px;
+  font-size: 0.62rem;
+}
+
+@media (max-width: 640px) {
+  .plate-engage-btn small {
+    display: none;
+  }
+
+  .plate-composer,
+  .plate-comment {
+    grid-template-columns: 1fr;
+  }
+
+  .plate-composer .user-avatar,
+  .plate-comment .user-avatar {
+    display: none;
+  }
+
+  .share-sheet {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+    width: auto;
+  }
+
+  .plate-composer-foot,
+  .plate-composer-gate {
+    width: 100%;
+  }
+
+  .plate-composer-gate .notes-more-btn,
+  .plate-composer-gate .plate-ghost-btn {
+    flex: 1 1 140px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate-engage-btn,
+  .share-sheet,
+  .plate-engage-btn i {
+    transition: none;
+    animation: none;
+  }
+}

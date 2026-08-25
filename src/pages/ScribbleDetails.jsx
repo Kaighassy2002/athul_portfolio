@@ -1,67 +1,134 @@
-import React, { useEffect, useState } from 'react';
-import { blogByIdAPI } from '../service/allApi';
-import { useParams } from "react-router-dom";
-import BlogContentViewer from '../components/BlogContentViewer';
-import Header from '../components/Header';
+import React, { useEffect, useState } from "react";
+import { scribbleByIdAPI } from "../service/allApi";
+import { Link, useParams } from "react-router-dom";
+import BlogContentViewer from "../components/BlogContentViewer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import "../styles/article.css";
 
-function BlogDetails() {
+const formatDateParts = (value) => {
+  const date = new Date(value);
+  return {
+    day: date.toLocaleDateString("en-GB", { day: "2-digit" }),
+    month: date.toLocaleDateString("en-GB", { month: "short" }),
+    year: date.getFullYear(),
+  };
+};
+
+function ScribbleDetails() {
   const { id } = useParams();
-  const [blog, setBlog] = useState(null);
-  const [error, setError] = useState('');
+  const [scribble, setScribble] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    blogByIdAPI(id)
-      .then(res => {
-        const blogData = res.data.data;
-        console.log("Blog content:", blogData.content);
-        if (!blogData || !blogData.content) {
+    scribbleByIdAPI(id)
+      .then((res) => {
+        if (res?.status !== 200) {
+          setError("Failed to load scribble content.");
+          return;
+        }
+        const scribbleData = res.data?.data || res.data;
+        if (!scribbleData || !scribbleData.content) {
           setError("No content available.");
           return;
         }
-        
-        const parsedContent = typeof blogData.content === "string"
-          ? JSON.parse(blogData.content)
-          : blogData.content;
+        if (!scribbleData.is_published) {
+          setError("This post is not published.");
+          return;
+        }
 
-        setBlog({ ...blogData, content: parsedContent });
+        const parsedContent =
+          typeof scribbleData.content === "string"
+            ? JSON.parse(scribbleData.content)
+            : scribbleData.content;
+
+        setScribble({ ...scribbleData, content: parsedContent });
       })
-      .catch(err => {
-        console.error("Failed to fetch blog:", err);
-        setError("Failed to load blog content.");
+      .catch((err) => {
+        console.error("Failed to fetch scribble:", err);
+        setError("Failed to load scribble content.");
       });
   }, [id]);
-  
 
-  if (error) return <p className="text-center my-5 text-danger">{error}</p>;
-  if (!blog) return <p className="text-center my-5">Loading...</p>;
+  if (error) {
+    return (
+      <div className="article-page article-page--scribble">
+        <Header />
+        <div className="article-status is-error">
+          <p>{error}</p>
+          <Link to="/scribble" className="article-end-link">
+            Back to scribbles
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
-  const hasContent = blog.content?.root?.children?.length > 0;
+  if (!scribble) {
+    return (
+      <div className="article-page article-page--scribble">
+        <Header />
+        <div className="scribble-sheet scribble-sheet--loading">
+          <div className="article-skeleton-title" />
+          <div className="article-skeleton-block" />
+        </div>
+      </div>
+    );
+  }
+
+  const hasContent = scribble.content?.root?.children?.length > 0;
+  const cover = scribble.coverImageUrl || scribble.coverImage;
+  const { day, month, year } = formatDateParts(scribble.createdAt);
 
   return (
-    <div>
-      <Header/>
-      <div className="container my-5">
-        <h1 className="mb-2 text-dark fs-6">{blog.title}</h1>
-        <p className="text-muted">
-          {new Date(blog.createdAt).toLocaleDateString()}
-        </p>
-        {blog.coverImage && (
-          <img
-            src={blog.coverImage}
-            alt="cover"
-            className="mb-4 rounded img-fluid"
-            loading='lazy'
-          />
-        )}
-        {/* Content Viewer or Fallback Message */}
-       {hasContent ? (
-  <BlogContentViewer  content={blog.content}/>
-) : (
-  <p className="text-center mt-4">No content available.</p>
-)}
+    <div className="article-page article-page--scribble">
+      <Header />
+
+      <div className="scribble-sheet">
+        <aside className="scribble-gutter">
+          <time className="scribble-stamp" dateTime={scribble.createdAt}>
+            <span className="scribble-stamp-day">{day}</span>
+            <span className="scribble-stamp-month">{month}</span>
+            <span className="scribble-stamp-year">{year}</span>
+          </time>
+          <span className="scribble-punch" aria-hidden="true" />
+          <span className="scribble-punch" aria-hidden="true" />
+          <span className="scribble-punch" aria-hidden="true" />
+        </aside>
+
+        <article className="scribble-note">
+          <Link to="/scribble" className="article-back">
+            <i className="fa-solid fa-arrow-left"></i>
+            Margins
+          </Link>
+          <p className="scribble-label">{scribble.category || "Margin note"}</p>
+          <h1 className="scribble-note-title">{scribble.title}</h1>
+          <p className="scribble-author">{scribble.author || "Athul Suresh"}</p>
+
+          {cover ? (
+            <figure className="scribble-polaroid">
+              <img src={cover} alt={scribble.title} loading="lazy" />
+            </figure>
+          ) : null}
+
+          {hasContent ? (
+            <div className="article-body scribble-body">
+              <BlogContentViewer content={scribble.content} />
+            </div>
+          ) : (
+            <p className="article-empty">No content available.</p>
+          )}
+
+          <p className="scribble-signoff">— that’s the note.</p>
+          <Link to="/scribble" className="scribble-back-link">
+            More scribbles
+            <i className="fa-solid fa-arrow-right"></i>
+          </Link>
+        </article>
       </div>
+      <Footer />
     </div>
   );
 }
 
-export default BlogDetails;
+export default ScribbleDetails;
