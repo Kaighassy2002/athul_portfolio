@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import AtlasMap from "../components/home/AtlasMap";
 import { DESTINATIONS } from "../components/home/destinations";
 import { warmAtlasAssets } from "../components/atlas/warmAtlas";
+import Seo from "../components/Seo";
 import "../styles/landing.css";
 
 function CompassRose() {
@@ -43,6 +44,8 @@ function Landing() {
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
+    const short = window.matchMedia("(max-height: 740px), (max-width: 768px)").matches;
+    if (short) return undefined;
     const prevHtml = html.style.overflow;
     const prevBody = body.style.overflow;
     html.style.overflow = "hidden";
@@ -123,9 +126,14 @@ function Landing() {
 
   return (
     <div className="landing-page" ref={pageRef}>
+      <Seo
+        title="Home"
+        description="Explore Athul Suresh's atlas of projects, field notes, and experiments — mapped one destination at a time."
+        path="/"
+      />
       <Header />
 
-      <section className="landing-hero">
+      <section className="landing-hero" id="main-content">
         <div className="landing-grid" aria-hidden="true" />
         <div className="landing-paper" aria-hidden="true" />
 
@@ -169,13 +177,14 @@ function Landing() {
               key={dest.id}
               to={dest.path}
               className={hovered === dest.id ? "is-on" : ""}
-              aria-label={dest.title}
               onMouseEnter={() => {
                 setHovered(dest.id);
                 if (dest.path === "/atlas") warmAtlasAssets();
               }}
               onMouseLeave={() => setHovered(null)}
-            />
+            >
+              <span className="landing-rail-label">{dest.title}</span>
+            </Link>
           ))}
         </nav>
       </section>

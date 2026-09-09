@@ -93,7 +93,7 @@ export default function Profile() {
         </div>
       </section>
 
-      <main className="passport-main">
+      <main className="passport-main" id="main-content">
         {user && (
           <div className="passport-card passport-profile">
             <div className="passport-profile-head">

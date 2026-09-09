@@ -450,15 +450,47 @@ html {
 }
 
 .landing-rail a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 8px;
+  min-height: 8px;
+  padding: 4px 0 4px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+}
+
+.landing-rail a::after {
+  content: "";
   width: 8px;
   height: 8px;
   border: 1.5px solid var(--ink);
   border-radius: 50%;
   background: transparent;
+  flex-shrink: 0;
   transition: transform 0.25s ease, background 0.25s ease;
 }
 
-.landing-rail a.is-on {
+.landing-rail-label {
+  position: absolute;
+  right: 18px;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.72;
+}
+
+.landing-rail a:hover .landing-rail-label,
+.landing-rail a:focus-visible .landing-rail-label,
+.landing-rail a.is-on .landing-rail-label {
+  opacity: 1;
+}
+
+.landing-rail a.is-on::after {
   background: var(--ink);
   transform: scale(1.2);
 }
@@ -513,6 +545,19 @@ html {
   }
 }
 
+@media (max-width: 768px), (max-height: 740px) {
+  .landing-page {
+    height: auto;
+    min-height: 100dvh;
+    overflow: auto;
+  }
+
+  .landing-hero {
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
 @media (max-width: 768px) {
   .landing-hero {
     padding: 92px 6% 18px;
@@ -534,6 +579,18 @@ html {
 
   .landing-rail {
     right: 10px;
+  }
+
+  .landing-rail-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .home-pin {

@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/skill.css";
 import { getTeckStackAPI } from "../service/allApi";
-import { SERVER_URL } from "../service/serverURL";
+import { mediaUrl } from "../utils/mediaUrl";
 import { FIELDS } from "./atlas/story";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -210,7 +210,7 @@ const Skills = () => {
             : tools.map((tool, index) => (
                 <div className="skill-icon" key={tool._id || index}>
                   <img
-                    src={`${SERVER_URL}${tool.logo}`}
+                    src={mediaUrl(tool.logo)}
                     alt={tool.name}
                     onError={(e) => {
                       e.target.src = "/fallback.png";

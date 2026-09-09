@@ -10,13 +10,43 @@ export function unwrapList(response) {
   return [];
 }
 
+async function fetchPagedList(path) {
+  const limit = 50;
+  const all = [];
+  let page = 1;
+  let total = Infinity;
+  let lastResponse = null;
+
+  while (all.length < total && page <= 20) {
+    const response = await commonAPI(
+      "GET",
+      `${SERVER_URL}${path}?page=${page}&limit=${limit}`
+    );
+    lastResponse = response;
+    if (response?.status !== 200) {
+      return page === 1 ? response : { status: 200, data: { data: all, total: all.length } };
+    }
+    const chunk = unwrapList(response);
+    const payload = response?.data || {};
+    total = Number.isFinite(Number(payload.total)) ? Number(payload.total) : all.length + chunk.length;
+    all.push(...chunk);
+    if (!chunk.length || chunk.length < limit) break;
+    page += 1;
+  }
+
+  return {
+    status: lastResponse?.status || 200,
+    data: { success: true, data: all, total: all.length },
+  };
+}
+
 export const getAllcertificatesAPI = async()=>{
     return await commonAPI('GET',`${SERVER_URL}/getAllcertificates`);
 }
 
 
 export const listAllBlogsAPI= async()=>{
-  return  await commonAPI("GET",`${SERVER_URL}/list-blog`)
+  return fetchPagedList("/list-blog");
 }
 
 export const blogByIdAPI = async (id) => {
@@ -28,7 +58,7 @@ export const scribbleByIdAPI = async (id) => {
 };
 
 export const listAllScribblesAPI= async()=>{
-  return  await commonAPI("GET",`${SERVER_URL}/list-scribble`)
+  return fetchPagedList("/list-scribble");
 }
 
 
@@ -57,6 +87,21 @@ export const forgotPasswordAPI = async (body) =>
 
 export const resetPasswordAPI = async (body) =>
   unwrapBody(await commonAPI("POST", `${SERVER_URL}/auth/reset`, body));
+
+export const verifyEmailAPI = async (body) =>
+  unwrapBody(await commonAPI("POST", `${SERVER_URL}/auth/verify`, body));
+
+export const resendVerificationAPI = async (body) =>
+  unwrapBody(await commonAPI("POST", `${SERVER_URL}/auth/resend-verification`, body));
+
+export const refreshSessionAPI = async () =>
+  unwrapBody(await commonAPI("POST", `${SERVER_URL}/auth/refresh`, {}));
+
+export const logoutAPI = async () =>
+  unwrapBody(await commonAPI("POST", `${SERVER_URL}/auth/logout`, {}));
+
+export const contactAPI = async (body) =>
+  unwrapBody(await commonAPI("POST", `${SERVER_URL}/contact`, body));
 
 export const meAPI = async () =>
   unwrapBody(await commonAPI("GET", `${SERVER_URL}/auth/me`));

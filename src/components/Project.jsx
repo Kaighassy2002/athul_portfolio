@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/project.css";
 import { getProjectAPI } from "../service/allApi";
-import { SERVER_URL } from "../service/serverURL";
+import { mediaUrl } from "../utils/mediaUrl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -287,7 +287,7 @@ function Project() {
                           <div key={`${tech.name}-${i}`} className="tech-item">
                             {tech.logo ? (
                               <img
-                                src={`${SERVER_URL}${tech.logo}`}
+                                src={mediaUrl(tech.logo)}
                                 alt=""
                                 className="tech-logo"
                               />

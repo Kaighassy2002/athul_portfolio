@@ -7,6 +7,7 @@ import BlogContentViewer from "../components/BlogContentViewer";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BlogInteractions from "../components/BlogInteractions";
+import Seo from "../components/Seo";
 import {
   estimateReadMinutes,
   excerptFrom,
@@ -349,7 +350,7 @@ function BlogDetails() {
     return (
       <div className="article-page article-page--blog">
         <Header />
-        <div className="article-status is-error">
+        <div className="article-status is-error" id="main-content">
           <p>{error}</p>
           <Link to="/blog" className="article-end-link">
             Back to the survey
@@ -363,7 +364,7 @@ function BlogDetails() {
     return (
       <div className="article-page article-page--blog">
         <Header />
-        <div className="article-skeleton plate-skeleton">
+        <div className="article-skeleton plate-skeleton" id="main-content">
           <div className="article-skeleton-kicker" />
           <div className="article-skeleton-title" />
           <div className="article-skeleton-title is-short" />
@@ -384,6 +385,12 @@ function BlogDetails() {
 
   return (
     <div className="article-page article-page--blog" ref={pageRef}>
+      <Seo
+        title={blog.title}
+        description={intro || excerptFrom(blog, 160)}
+        path={`/blog/${blog._id}`}
+        type="article"
+      />
       <div
         className="article-progress"
         style={{ width: `${progress}%` }}
@@ -393,7 +400,7 @@ function BlogDetails() {
       <div className="article-paper" aria-hidden="true" />
       <Header />
 
-      <main className={`plate ${cover ? "has-cover" : ""}`}>
+      <main className={`plate ${cover ? "has-cover" : ""}`} id="main-content">
         <section className="plate-masthead">
           <span className="plate-mark plate-mark--tl">Plate {plate}</span>
           <span className="plate-mark plate-mark--tr">Thrissur, Kerala</span>

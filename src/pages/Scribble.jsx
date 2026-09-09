@@ -4,6 +4,7 @@ import gsap from "gsap";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { listAllScribblesAPI, unwrapList } from "../service/allApi";
+import Seo from "../components/Seo";
 import {
   excerptFrom,
   formatDateParts,
@@ -215,9 +216,14 @@ function Scribble() {
 
   return (
     <div className="scribble-page" ref={pageRef}>
+      <Seo
+        title="Scribble"
+        description="Sketches, UI experiments, coding thoughts, and unfinished concepts from Athul Suresh."
+        path="/scribble"
+      />
       <Header />
 
-      <section className="scribble-hero">
+      <section className="scribble-hero" id="main-content">
         <div className="scribble-grid" aria-hidden="true" />
         <div className="scribble-paper" aria-hidden="true" />
         <span className="scribble-mark scribble-mark--tl">Plate 03</span>
@@ -259,7 +265,7 @@ function Scribble() {
         <div className="scribble-journal-head">
           <p className="scribble-kicker">The notebook</p>
           <h2>Pages from the desk</h2>
-          <div className="scribble-legend" role="tablist" aria-label="Notebook types">
+          <div className="scribble-legend" role="group" aria-label="Notebook types">
             <button
               type="button"
               className={`scribble-legend-item ${selectedKind === null ? "is-active" : ""}`}

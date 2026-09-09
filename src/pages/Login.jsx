@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AuthPanel from "../components/AuthPanel";
 import { useAuth } from "../context/AuthContext";
+import Seo from "../components/Seo";
 import "../styles/blog.css";
 import "../styles/auth.css";
 
@@ -72,6 +73,12 @@ export default function Login() {
 
   return (
     <div className="passport-page" ref={pageRef}>
+      <Seo
+        title="Login"
+        description="Login to like and comment on Athul Suresh's field notes."
+        path="/login"
+        noIndex
+      />
       <Header />
       <section className="notes-hero passport-hero">
         <div className="notes-grid" aria-hidden="true" />
@@ -96,7 +103,7 @@ export default function Login() {
         </div>
       </section>
 
-      <main className="passport-main">
+      <main className="passport-main" id="main-content">
         <div className="passport-card">
           <span className="passport-stamp" aria-hidden="true">
             Entry

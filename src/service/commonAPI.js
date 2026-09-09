@@ -1,42 +1,56 @@
 import axios from "axios";
 
-const TOKEN_KEY = "aqc-token";
+const client = axios.create({
+  withCredentials: true,
+  headers: { "Content-Type": "application/json" },
+});
 
-export function getAuthToken() {
-  try {
-    return localStorage.getItem(TOKEN_KEY) || "";
-  } catch {
-    return "";
-  }
-}
+let refreshPromise = null;
 
-export function setAuthToken(token) {
-  try {
-    if (token) localStorage.setItem(TOKEN_KEY, token);
-    else localStorage.removeItem(TOKEN_KEY);
-  } catch {
-    /* private mode */
+client.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const original = error.config;
+    const status = error?.response?.status;
+    const url = String(original?.url || "");
+    const skip =
+      url.includes("/auth/login") ||
+      url.includes("/auth/signup") ||
+      url.includes("/auth/refresh") ||
+      url.includes("/auth/logout") ||
+      original?._retry;
+
+    if (status === 401 && original && !skip) {
+      original._retry = true;
+      try {
+        if (!refreshPromise) {
+          refreshPromise = client.post("/api/auth/refresh", {}).finally(() => {
+            refreshPromise = null;
+          });
+        }
+        await refreshPromise;
+        return client(original);
+      } catch {
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
   }
-}
+);
 
 export const commonAPI = async (httpRequest, url, reqBody, reqHeader) => {
-  const token = getAuthToken();
-  const headers = {
-    "Content-Type": "application/json",
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    ...(reqHeader || {}),
-  };
-
   const reqConfig = {
     method: httpRequest,
     url,
     data: reqBody,
-    headers,
+    headers: reqHeader || undefined,
   };
 
-  return await axios(reqConfig)
-    .then((res) => res)
-    .catch((err) => err);
+  try {
+    return await client(reqConfig);
+  } catch (err) {
+    return err;
+  }
 };
 
 export function unwrapBody(response) {

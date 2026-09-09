@@ -54,7 +54,7 @@ function ScribbleDetails() {
     return (
       <div className="article-page article-page--scribble">
         <Header />
-        <div className="article-status is-error">
+        <div className="article-status is-error" id="main-content">
           <p>{error}</p>
           <Link to="/scribble" className="article-end-link">
             Back to scribbles
@@ -68,7 +68,7 @@ function ScribbleDetails() {
     return (
       <div className="article-page article-page--scribble">
         <Header />
-        <div className="scribble-sheet scribble-sheet--loading">
+        <div className="scribble-sheet scribble-sheet--loading" id="main-content">
           <div className="article-skeleton-title" />
           <div className="article-skeleton-block" />
         </div>
@@ -84,7 +84,7 @@ function ScribbleDetails() {
     <div className="article-page article-page--scribble">
       <Header />
 
-      <div className="scribble-sheet">
+      <div className="scribble-sheet" id="main-content">
         <aside className="scribble-gutter">
           <time className="scribble-stamp" dateTime={scribble.createdAt}>
             <span className="scribble-stamp-day">{day}</span>

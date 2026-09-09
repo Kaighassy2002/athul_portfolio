@@ -7,26 +7,57 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 let gisPromise;
 
+function gisReady() {
+  return Boolean(window.google?.accounts?.oauth2);
+}
+
 function loadGoogleIdentity() {
-  if (window.google?.accounts?.oauth2) return Promise.resolve();
+  if (gisReady()) return Promise.resolve();
   if (gisPromise) return gisPromise;
   gisPromise = new Promise((resolve, reject) => {
+    const started = Date.now();
+    const wait = () => {
+      if (gisReady()) {
+        resolve();
+        return;
+      }
+      if (Date.now() - started > 8000) {
+        reject(new Error("Google failed to load"));
+        return;
+      }
+      window.setTimeout(wait, 40);
+    };
+
     const existing = document.querySelector("script[data-gis='true']");
-    if (existing) {
-      existing.addEventListener("load", () => resolve());
-      existing.addEventListener("error", () => reject(new Error("Google failed to load")));
-      return;
+    if (!existing) {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.dataset.gis = "true";
+      script.onerror = () => reject(new Error("Google failed to load"));
+      document.head.appendChild(script);
     }
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.dataset.gis = "true";
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Google failed to load"));
-    document.head.appendChild(script);
+    wait();
+  }).catch((error) => {
+    gisPromise = null;
+    throw error;
   });
   return gisPromise;
+}
+
+function googleErrorMessage(error) {
+  const type = String(error?.type || error?.message || "").toLowerCase();
+  if (type.includes("popup_failed") || type.includes("popup_blocked")) {
+    return "The Google window was blocked. Allow popups and try again.";
+  }
+  if (type.includes("popup_closed") || type.includes("cancel")) {
+    return "Google login was cancelled.";
+  }
+  if (type.includes("origin")) {
+    return "This site origin is not allowed for Google login.";
+  }
+  return "Google login could not start.";
 }
 
 function Field({
@@ -103,6 +134,7 @@ export default function AuthPanel({
     forgotPassword,
     googleClientId,
     googleEnabled,
+    googleCodeLogin,
     authMode,
     setAuthMode,
   } = useAuth();
@@ -123,7 +155,22 @@ export default function AuthPanel({
   const [showPassword, setShowPassword] = useState(false);
   const [notice, setNotice] = useState("");
   const [devResetUrl, setDevResetUrl] = useState("");
-  const googleClientRef = useRef(null);
+  const googleCodeClientRef = useRef(null);
+  const googleTokenClientRef = useRef(null);
+  const loginWithGoogleRef = useRef(loginWithGoogle);
+  const finishRef = useRef(null);
+
+  loginWithGoogleRef.current = loginWithGoogle;
+
+  useEffect(() => {
+    if (!googleEnabled) return undefined;
+    loadGoogleIdentity().catch(() => {});
+  }, [googleEnabled]);
+
+  useEffect(() => {
+    googleCodeClientRef.current = null;
+    googleTokenClientRef.current = null;
+  }, [googleClientId]);
 
   useEffect(() => {
     setPageMode(initialMode);
@@ -152,8 +199,12 @@ export default function AuthPanel({
     if (!EMAIL_RE.test(form.email.trim())) {
       next.email = "Please use a valid email.";
     }
-    if (activeMode !== "forgot" && form.password.length < 8) {
-      next.password = "At least 8 characters.";
+    if (activeMode !== "forgot" && (
+      form.password.length < 8 ||
+      !/[A-Za-z]/.test(form.password) ||
+      !/\d/.test(form.password)
+    )) {
+      next.password = "Use 8+ characters with a letter and a number.";
     }
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -162,12 +213,84 @@ export default function AuthPanel({
   const finish = (result) => {
     if (!result.ok) {
       setFormError(result.message);
-      if (result.code === "USE_GOOGLE") setMode("login");
+      if (result.code === "USE_GOOGLE" || result.code === "USE_PASSWORD") setMode("login");
+      if (result.code === "EMAIL_UNVERIFIED") {
+        setNotice("Please verify your email. A letter should already be on the way.");
+      }
       return false;
     }
     onSuccess?.(result.data.user);
     return true;
   };
+
+  finishRef.current = finish;
+
+  const completeGoogle = async (payload) => {
+    setLoading(true);
+    try {
+      const result = await loginWithGoogleRef.current(payload);
+      finishRef.current?.(result);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const completeGoogleRef = useRef(completeGoogle);
+  completeGoogleRef.current = completeGoogle;
+
+  useEffect(() => {
+    if (!googleEnabled || activeMode === "forgot") return undefined;
+    let cancelled = false;
+
+    const onGoogleError = (error) => {
+      setFormError(googleErrorMessage(error));
+      setLoading(false);
+    };
+
+    loadGoogleIdentity()
+      .then(() => {
+        if (cancelled) return;
+        const oauth2 = window.google?.accounts?.oauth2;
+        if (!oauth2) return;
+
+        if (oauth2.initCodeClient) {
+          googleCodeClientRef.current = oauth2.initCodeClient({
+            client_id: googleClientId,
+            scope: "openid email profile",
+            ux_mode: "popup",
+            callback: (response) => {
+              if (response.error || !response.code) {
+                onGoogleError(response);
+                return;
+              }
+              completeGoogleRef.current({ code: response.code });
+            },
+            error_callback: onGoogleError,
+          });
+        }
+
+        if (oauth2.initTokenClient) {
+          googleTokenClientRef.current = oauth2.initTokenClient({
+            client_id: googleClientId,
+            scope: "openid email profile",
+            callback: (response) => {
+              if (response.error || !response.access_token) {
+                onGoogleError(response);
+                return;
+              }
+              completeGoogleRef.current({ accessToken: response.access_token });
+            },
+            error_callback: onGoogleError,
+          });
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setFormError("Google login could not start.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeMode, googleClientId, googleEnabled]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -190,13 +313,18 @@ export default function AuthPanel({
       }
 
       if (activeMode === "signup") {
-        finish(
-          await signup({
-            name: form.name.trim(),
-            email: form.email.trim(),
-            password: form.password,
-          })
-        );
+        const result = await signup({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          password: form.password,
+        });
+        if (!result.ok) {
+          setFormError(result.message);
+          if (result.code === "USE_GOOGLE") setMode("login");
+          return;
+        }
+        setNotice(result.data.message || "Check your email to verify the account.");
+        if (result.data.devVerifyUrl) setDevResetUrl(result.data.devVerifyUrl);
         return;
       }
 
@@ -211,44 +339,71 @@ export default function AuthPanel({
     }
   };
 
-  const onGoogle = async () => {
+  const onGoogle = () => {
     if (!googleEnabled) {
       setFormError("Google login is not configured yet.");
       return;
     }
     setFormError("");
-    try {
-      await loadGoogleIdentity();
-      if (!window.google?.accounts?.oauth2) {
-        throw new Error("Google is unavailable.");
-      }
-      if (!googleClientRef.current) {
-        googleClientRef.current = window.google.accounts.oauth2.initTokenClient({
+
+    const oauth2 = window.google?.accounts?.oauth2;
+    if (!oauth2) {
+      loadGoogleIdentity().catch(() => {});
+      setFormError("Google is still loading. Try again in a moment.");
+      return;
+    }
+
+    if (googleCodeLogin) {
+      if (!googleCodeClientRef.current && oauth2.initCodeClient) {
+        googleCodeClientRef.current = oauth2.initCodeClient({
           client_id: googleClientId,
           scope: "openid email profile",
-          callback: async (response) => {
-            if (response.error) {
-              setFormError("Google login was cancelled.");
+          ux_mode: "popup",
+          callback: (response) => {
+            if (response.error || !response.code) {
+              setFormError(googleErrorMessage(response));
               setLoading(false);
               return;
             }
-            setLoading(true);
-            try {
-              const result = await loginWithGoogle({
-                accessToken: response.access_token,
-              });
-              finish(result);
-            } finally {
-              setLoading(false);
-            }
+            completeGoogle({ code: response.code });
+          },
+          error_callback: (error) => {
+            setFormError(googleErrorMessage(error));
+            setLoading(false);
           },
         });
       }
-      googleClientRef.current.requestAccessToken({ prompt: "select_account" });
-    } catch {
-      setFormError("Google login could not start.");
-      setLoading(false);
+      if (googleCodeClientRef.current?.requestCode) {
+        googleCodeClientRef.current.requestCode();
+        return;
+      }
     }
+
+    if (!googleTokenClientRef.current && oauth2.initTokenClient) {
+      googleTokenClientRef.current = oauth2.initTokenClient({
+        client_id: googleClientId,
+        scope: "openid email profile",
+        callback: (response) => {
+          if (response.error || !response.access_token) {
+            setFormError(googleErrorMessage(response));
+            setLoading(false);
+            return;
+          }
+          completeGoogle({ accessToken: response.access_token });
+        },
+        error_callback: (error) => {
+          setFormError(googleErrorMessage(error));
+          setLoading(false);
+        },
+      });
+    }
+
+    if (googleTokenClientRef.current?.requestAccessToken) {
+      googleTokenClientRef.current.requestAccessToken({ prompt: "select_account" });
+      return;
+    }
+
+    setFormError("Google login could not start.");
   };
 
   return (
@@ -310,7 +465,7 @@ export default function AuthPanel({
                 value={form.password}
                 onChange={onChange}
                 autoComplete={activeMode === "signup" ? "new-password" : "current-password"}
-                placeholder="At least 8 characters"
+                placeholder="8+ characters, letter and number"
                 disabled={loading}
                 aria-invalid={Boolean(errors.password)}
               />
@@ -341,7 +496,7 @@ export default function AuthPanel({
         {notice ? <p className="passport-notice">{notice}</p> : null}
         {devResetUrl ? (
           <p className="passport-notice">
-            Dev reset link:{" "}
+            Dev link:{" "}
             <Link to={devResetUrl.replace(window.location.origin, "")}>open it</Link>
           </p>
         ) : null}

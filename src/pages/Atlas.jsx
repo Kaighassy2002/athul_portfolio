@@ -9,6 +9,7 @@ import Experience from "../components/Experience";
 import Project from "../components/Project";
 import Footer from "../components/Footer";
 import AtlasEntry from "../components/atlas/AtlasEntry";
+import Seo from "../components/Seo";
 import {
   BEATS,
   CHAPTERS,
@@ -426,6 +427,11 @@ function Atlas() {
       className={`atlas-page${entering ? " is-entering" : ""}${prologue ? " has-prologue" : ""}`}
       ref={pageRef}
     >
+      <Seo
+        title="Atlas"
+        description="Athul Suresh's atlas — skills, experience, and projects mapped as a journey."
+        path="/atlas"
+      />
       {entering ? (
         <AtlasEntry
           pageRef={pageRef}
@@ -460,7 +466,7 @@ function Atlas() {
 
       <div
         className={`atlas-stage${reduced ? " is-static" : ""}`}
-        id="atlas-stage"
+        id="main-content"
         ref={stageRef}
       >
         <div className="atlas-stage-view" ref={viewRef}>

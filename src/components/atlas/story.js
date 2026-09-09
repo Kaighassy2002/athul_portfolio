@@ -199,7 +199,7 @@ export const SNAP_POINTS = [
 ];
 
 export const CHAPTERS = [
-  { id: "atlas", code: "01", label: "Atlas", pinAt: HOLD_POINTS.hero, href: "#atlas-stage" },
+  { id: "atlas", code: "01", label: "Atlas", pinAt: HOLD_POINTS.hero, href: "#main-content" },
   { id: "person", code: "02", label: "Person", pinAt: HOLD_POINTS.person, href: "#atlas-person" },
   { id: "expertise", code: "03", label: "Expertise", pinAt: HOLD_POINTS.fields, href: "#atlas-craft" },
   { id: "path", code: "04", label: "Path", pinAt: null, href: "#atlas-path" },

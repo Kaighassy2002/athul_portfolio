@@ -42,8 +42,8 @@ export default function ResetPassword() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (password.length < 8) {
-      setError("Password should be at least 8 characters.");
+    if (password.length < 8 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+      setError("Password should include a letter and a number, at least 8 characters.");
       return;
     }
     if (password !== confirm) {
@@ -68,7 +68,7 @@ export default function ResetPassword() {
   return (
     <div className="passport-page" ref={pageRef}>
       <Header />
-      <main className="passport-main passport-main--solo">
+      <main className="passport-main passport-main--solo" id="main-content">
         <div className="passport-card">
           <p className="notes-kicker">Lost key</p>
           <h1 className="notes-title" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
@@ -82,7 +82,7 @@ export default function ResetPassword() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="new-password"
-                placeholder="At least 8 characters"
+                placeholder="8+ characters, letter and number"
                 disabled={loading}
               />
             </label>

@@ -4,11 +4,13 @@ import {
   forgotPasswordAPI,
   googleLoginAPI,
   loginAPI,
+  logoutAPI,
   meAPI,
+  resendVerificationAPI,
   resetPasswordAPI,
   signupAPI,
+  verifyEmailAPI,
 } from "../service/allApi";
-import { setAuthToken } from "../service/commonAPI";
 
 const USER_KEY = "aqc-user";
 const INTENT_KEY = "aqc-auth-intent";
@@ -51,16 +53,16 @@ export function AuthProvider({ children }) {
   const [authMessage, setAuthMessage] = useState("");
   const [pendingAction, setPendingAction] = useState(() => readIntent());
   const [googleClientId, setGoogleClientId] = useState("");
+  const [googleCodeLogin, setGoogleCodeLogin] = useState(false);
 
-  const applySession = useCallback((token, nextUser, nextStats) => {
-    if (token !== undefined) setAuthToken(token || "");
+  const applySession = useCallback((nextUser, nextStats) => {
     persistUser(nextUser || null);
     setUser(nextUser || null);
     if (nextStats !== undefined) setStats(nextStats);
   }, []);
 
   const clearSession = useCallback(() => {
-    applySession("", null);
+    applySession(null);
     setStats(null);
   }, [applySession]);
 
@@ -70,21 +72,15 @@ export function AuthProvider({ children }) {
     const boot = async () => {
       const config = await authConfigAPI();
       if (!cancelled && config.ok) {
-        setGoogleClientId(config.data.googleClientId || "");
-      }
-
-      const stored = readStoredUser();
-      const hasToken = Boolean(localStorage.getItem("aqc-token"));
-      if (!stored && !hasToken) {
-        if (!cancelled) setReady(true);
-        return;
+        setGoogleClientId(String(config.data.googleClientId || "").trim());
+        setGoogleCodeLogin(Boolean(config.data.googleCodeLogin));
       }
 
       const profile = await meAPI();
       if (cancelled) return;
       if (profile.ok) {
-        applySession(undefined, profile.data.user, profile.data.stats);
-      } else if (profile.status === 401) {
+        applySession(profile.data.user, profile.data.stats);
+      } else {
         clearSession();
       }
       setReady(true);
@@ -128,11 +124,11 @@ export function AuthProvider({ children }) {
 
   const handleAuthSuccess = useCallback(
     (data) => {
-      applySession(data.token, data.user);
+      applySession(data.user);
       setAuthOpen(false);
       meAPI().then((profile) => {
         if (profile.ok) {
-          applySession(data.token, profile.data.user, profile.data.stats);
+          applySession(profile.data.user, profile.data.stats);
         }
       });
       return data.user;
@@ -149,14 +145,9 @@ export function AuthProvider({ children }) {
     [handleAuthSuccess]
   );
 
-  const signup = useCallback(
-    async (payload) => {
-      const result = await signupAPI(payload);
-      if (result.ok) handleAuthSuccess(result.data);
-      return result;
-    },
-    [handleAuthSuccess]
-  );
+  const signup = useCallback(async (payload) => {
+    return signupAPI(payload);
+  }, []);
 
   const loginWithGoogle = useCallback(
     async (payload) => {
@@ -180,7 +171,21 @@ export function AuthProvider({ children }) {
     [handleAuthSuccess]
   );
 
-  const logout = useCallback(() => {
+  const verifyEmail = useCallback(
+    async (payload) => {
+      const result = await verifyEmailAPI(payload);
+      if (result.ok) handleAuthSuccess(result.data);
+      return result;
+    },
+    [handleAuthSuccess]
+  );
+
+  const resendVerification = useCallback(async (payload) => {
+    return resendVerificationAPI(payload);
+  }, []);
+
+  const logout = useCallback(async () => {
+    await logoutAPI();
     clearSession();
     setPendingAction(null);
     try {
@@ -214,6 +219,7 @@ export function AuthProvider({ children }) {
       pendingAction,
       googleClientId,
       googleEnabled: Boolean(googleClientId),
+      googleCodeLogin,
       setAuthMode,
       openAuth,
       closeAuth,
@@ -223,6 +229,8 @@ export function AuthProvider({ children }) {
       loginWithGoogle,
       forgotPassword,
       resetPassword,
+      verifyEmail,
+      resendVerification,
       logout,
       requireAuth,
     }),
@@ -235,6 +243,7 @@ export function AuthProvider({ children }) {
       authMessage,
       pendingAction,
       googleClientId,
+      googleCodeLogin,
       openAuth,
       closeAuth,
       consumePendingAction,
@@ -243,6 +252,8 @@ export function AuthProvider({ children }) {
       loginWithGoogle,
       forgotPassword,
       resetPassword,
+      verifyEmail,
+      resendVerification,
       logout,
       requireAuth,
     ]

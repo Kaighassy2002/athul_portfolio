@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import gsap from "gsap";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Seo from "../components/Seo";
 import { listAllBlogsAPI, unwrapList } from "../service/allApi";
 import {
   estimateReadMinutes,
@@ -51,7 +52,7 @@ function subjectOf(blog) {
 function plateMeta(blog, index) {
   const cover = blog.coverImageUrl || blog.coverImage;
   const tags = (blog.tags || []).map((tag) => tag.trim()).filter(Boolean);
-  const minutes = estimateReadMinutes(blog.content, blog.excerpt);
+  const minutes = blog.readMinutes || estimateReadMinutes(blog.content, blog.excerpt);
   const excerpt = excerptFrom(blog, 160);
   const coords = plateCoords(index);
   const plate = String(index + 1).padStart(2, "0");
@@ -70,7 +71,7 @@ function LeadPlate({ blog, index, kicker = "Latest plate" }) {
         <div className="notes-lead-frame">
           <PlateCorners />
           {cover ? (
-            <img src={cover} alt="" />
+            <img src={cover} alt={blog.title} />
           ) : (
             <div className="notes-lead-fallback" aria-hidden="true">
               <span>Plate {plate}</span>
@@ -131,7 +132,7 @@ function FolioCard({ blog, index }) {
         <PlateCorners />
         <span className="notes-entry-plate">Plate {plate}</span>
         {cover ? (
-          <img loading="lazy" src={cover} alt="" />
+          <img loading="lazy" src={cover} alt={blog.title} />
         ) : (
           <span className="notes-entry-fallback">{subject}</span>
         )}
@@ -298,6 +299,11 @@ function Blog() {
 
   return (
     <div className="blog-page" ref={pageRef}>
+      <Seo
+        title="Field notes"
+        description="A journal of AI, development, experiments, and the lessons that stay after the build is done."
+        path="/blog"
+      />
       <Header />
 
       <section className="notes-hero">
@@ -381,7 +387,7 @@ function Blog() {
         </div>
       </section>
 
-      <main className="notes-main">
+      <main className="notes-main" id="main-content">
         <section className="notes-archive" id="notes-index">
           <div className="notes-archive-head">
             <div className="notes-archive-copy">
@@ -411,7 +417,7 @@ function Blog() {
                 />
               </label>
               {uniqueCategories.length > 0 && (
-                <div className="notes-legend" role="tablist" aria-label="Subjects">
+                <div className="notes-legend" role="group" aria-label="Subjects">
                   <button
                     type="button"
                     className={`notes-legend-item ${selectedCategory === null ? "is-active" : ""}`}

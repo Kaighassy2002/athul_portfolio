@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Seo from "../components/Seo";
+import { contactAPI } from "../service/allApi";
 import "../styles/contact.css";
 
 const EMAIL = "athulksuresh21@gmail.com";
@@ -106,7 +108,7 @@ function Contact() {
     }
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     const name = form.name.trim();
@@ -119,10 +121,19 @@ function Contact() {
       return;
     }
 
-    const subject = form.subject.trim() || `A note from ${name}`;
-    const body = `From: ${name} <${email}>\n\n${message}`;
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setStatus("sending");
     setError("");
+    const result = await contactAPI({
+      name,
+      email,
+      subject: form.subject.trim(),
+      message,
+    });
+    if (!result.ok) {
+      setStatus("error");
+      setError(result.message || "The note could not be filed.");
+      return;
+    }
     setStatus("sent");
   };
 
@@ -134,9 +145,14 @@ function Contact() {
 
   return (
     <div className="contact-page" ref={pageRef}>
+      <Seo
+        title="Contact"
+        description="Write to Athul Suresh — collaborations, AI work, and conversations from Thrissur."
+        path="/contact"
+      />
       <Header />
 
-      <section className="contact-hero">
+      <section className="contact-hero" id="main-content">
         <div className="contact-grid" aria-hidden="true" />
         <div className="contact-paper" aria-hidden="true" />
         <span className="contact-mark contact-mark--tl">Plate 04</span>
@@ -224,10 +240,10 @@ function Contact() {
             {status === "sent" ? (
               <div className="contact-sent" role="status">
                 <p className="contact-sent-kicker">Filed</p>
-                <h3>The letter is in your mail app.</h3>
+                <h3>The letter is on its way.</h3>
                 <p>
-                  Send it from there, or start another note if the thought
-                  changed shape.
+                  I usually reply within a few days. Start another note if the
+                  thought changed shape.
                 </p>
                 <button type="button" className="contact-cta" onClick={resetLetter}>
                   Write another
@@ -288,8 +304,8 @@ function Contact() {
 
                 <div className="contact-form-foot">
                   <p>Yours,</p>
-                  <button type="submit" className="contact-cta">
-                    Send the note
+                  <button type="submit" className="contact-cta" disabled={status === "sending"}>
+                    {status === "sending" ? "Filing" : "Send the note"}
                     <i className="fa-solid fa-paper-plane"></i>
                   </button>
                 </div>
